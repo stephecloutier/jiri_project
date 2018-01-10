@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'Jiri.api',
-    'Jiri.main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +56,7 @@ ROOT_URLCONF = 'config.settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '../Jiri/templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +84,7 @@ DATABASES = {
         # 'HOST': '127.0.0.1',
         # 'PORT': '8889',
         'OPTIONS': {
-            'read_default_file': '/Users/Stephe/Documents/hepl/pw/jiri/Jiri/config/my.cnf',
+            'read_default_file': os.path.join(BASE_DIR, 'my.cnf'),
         },
     }
 }
@@ -138,3 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media files
+MEDIA_ROOT = os.path.join(BASE_DIR, '../Jiri/media')
+MEDIA_URL = '/media/'
