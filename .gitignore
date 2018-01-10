@@ -8,7 +8,7 @@ api/Jiri/*.pot
 api/Jiri/*.py[co]
 api/Jiri/.tox/
 api/Jiri/__pycache__
-api/Jiri/__pycache__/
+__pycache__/
 api/Jiri/MANIFEST
 api/Jiri/dist/
 api/Jiri/docs/_build/
