@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'Jiri.api',
     'Jiri.main',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -77,14 +79,19 @@ WSGI_APPLICATION = 'config.settings.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
+        # 'NAME': 'jiri',
+        # 'USER': 'root',
+        # 'PASSWORD': 'root',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '8889',
         'OPTIONS': {
-            'read_default_file': '../db.cnf',
+            'read_default_file': '/Users/Stephe/Documents/hepl/pw/jiri/Jiri/config/my.cnf',
         },
     }
 }
 
 
-AUTH_USER_MODEL = 'main.User'
+AUTH_USER_MODEL = 'api.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -104,6 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Rest Framework
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
