@@ -6,8 +6,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from Jiri.api import views
 
 urlpatterns = [
-    path('users/', views.user_list),
-    path('users/<int:user_id>', views.user_detail),
+    path('users/', views.UserList.as_view()),
+    path('users/<int:id>', views.UserDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
