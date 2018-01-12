@@ -1,4 +1,5 @@
-# from django.urls import path, include
+from django.urls import path
+from django.conf.urls import include
 # from rest_framework import routers
 # from Jiri.api import views
 
@@ -8,9 +9,15 @@ from Jiri.api import views
 urlpatterns = [
     path('users/', views.UserList.as_view()),
     path('users/<int:id>', views.UserDetail.as_view()),
+    path('events/', views.EventList.as_view()),
+    path('events/<int:pk>', views.EventDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls')),
+]
 
 ### old tuto ###
 # router = routers.DefaultRouter()

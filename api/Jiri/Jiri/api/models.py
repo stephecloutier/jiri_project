@@ -48,13 +48,13 @@ class Event(models.Model):
     )
     course_name = models.CharField(max_length=50)
     exam_session = models.CharField(max_length=1, choices=SESSION_IN_YEAR_CHOICES)
-    date = models.DateField()
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    exam_date = models.DateField()
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='events')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
-        return self.course_name + ' ' + self.exam_session
+        return self.course_name + ' ' + self.exam_date.strftime('%d %B %Y')
 
 class Implementation(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
