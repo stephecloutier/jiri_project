@@ -5,8 +5,19 @@ from .serializers import UserSerializer, EventSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 ## DJR Tutorial
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+    'users': reverse('user-list', request=request, format=format),
+    'events': reverse('event-list', request=request, format=format)
+})
+
+
 class EventList(generics.ListCreateAPIView):
     """
     List all users, or create a new user

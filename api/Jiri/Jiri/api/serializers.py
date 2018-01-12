@@ -2,18 +2,18 @@ from .models import User, Event
 from rest_framework import serializers
 
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Event
-        fields = ('id', 'course_name', 'exam_session', 'exam_date', 'user')
+        fields = ('url', 'id', 'course_name', 'exam_session', 'exam_date', 'user')
 
 
-class UserSerializer(serializers.ModelSerializer):
-    events = serializers.PrimaryKeyRelatedField(many=True, queryset=Event.objects.all())
+class UserSerializer(serializers.HyperLinkedModelSerializer):
+    events = serializers.HyperlinkedRelatedField(many=True, view_name='event-detail', read_only=True)
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'profile_pic', 'is_admin', 'events')
+        fields = ('url', 'username', 'first_name', 'last_name', 'profile_pic', 'is_admin', 'events')
 
 ### other tuto ###
 # class UserSerializer(serializers.HyperlinkedModelSerializer):
