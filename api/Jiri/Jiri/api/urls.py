@@ -3,14 +3,34 @@ from django.conf.urls import include
 # from rest_framework import routers
 
 from rest_framework.urlpatterns import format_suffix_patterns
-from Jiri.api import views
+from rest_framework import renderers
+from .views import EventViewSet, UserViewSet, api_root
+
+
+event_list = EventViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+event_detail = EventViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+user_list = UserViewSet.as_view({
+    'get': 'list'
+})
+user_detail = UserViewSet.as_view({
+    'get': 'retrieve'
+})
+
 
 urlpatterns = format_suffix_patterns([
-    path('', views.api_root),
-    path('events/', views.EventList.as_view(), name='event-list'),
-    path('events/<int:pk>', views.EventDetail.as_view(), name='event-detail'),
-    path('users/', views.UserList.as_view(), name='user-list'),
-    path('users/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
+    path('', api_root),
+    path('events/', event_list, name='event-list'),
+    path('events/<int:pk>', event_detail, name='event-detail'),
+    path('users/', user_list, name='user-list'),
+    path('users/<int:pk>', user_detail, name='user-detail'),
 ])
 
 
