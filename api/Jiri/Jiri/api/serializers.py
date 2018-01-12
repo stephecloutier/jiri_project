@@ -9,7 +9,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'id', 'course_name', 'exam_session', 'exam_date', 'user')
 
 
-class UserSerializer(serializers.HyperLinkedModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     events = serializers.HyperlinkedRelatedField(many=True, view_name='event-detail', read_only=True)
     class Meta:
         model = User
