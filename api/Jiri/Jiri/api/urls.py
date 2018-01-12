@@ -8,7 +8,7 @@ from Jiri.api import views
 
 urlpatterns = [
     path('users/', views.UserList.as_view()),
-    path('users/<int:id>', views.UserDetail.as_view()),
+    path('users/<int:pk>', views.UserDetail.as_view()),
     path('events/', views.EventList.as_view()),
     path('events/<int:pk>', views.EventDetail.as_view()),
 ]
