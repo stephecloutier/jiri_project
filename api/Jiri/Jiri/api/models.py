@@ -55,6 +55,8 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
+    def __str__(self):
+        return self.course_name + ' ' + self.exam_session
 
 class Implementation(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
@@ -68,3 +70,36 @@ class Implementation(models.Model):
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
         return self.student + ' ' + self.project.name + ' ' + self.event
+
+
+class Meeting(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    event = models.ForeignKey('Event', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(default=None, blank=True, null=True)
+    def __str__(self):
+        return self.user + ' ' + self.student+ ' ' + self.event
+
+
+class Score(models.Model):
+    score = models.DecimalField(max_digits=4, decimal_places=2)
+    comment = models.TextField()
+    meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)
+    implementation = models.ForeignKey('Implementation', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(default=None, blank=True, null=True)
+    def __str__(self):
+        return self.meeting + ' ' + self.implementation
+
+class Performance(models.Model):
+    final_score = models.DecimalField(max_digits=4, decimal_places=2)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    event = models.ForeignKey('Event', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(default=None, blank=True, null=True)
+    def __str__(self):
+        return self.student + ' ' + self.event + ' ' + self.final_score
