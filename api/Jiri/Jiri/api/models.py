@@ -40,16 +40,14 @@ class Project(models.Model):
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
 
 class Event(models.Model):
-    JANVIER = 'JAN'
-    JUIN = 'JUN'
-    SEPTEMBRE = 'SEP'
+    PREMIERE = '1'
+    SECONDE = '2'
     SESSION_IN_YEAR_CHOICES = (
-        (JANVIER, 'Janvier'),
-        (JUIN, 'Juin'),
-        (SEPTEMBRE, 'Septembre'),
+        (PREMIERE, 'Première'),
+        (SECONDE, 'Seconde'),
     )
     course_name = models.CharField(max_length=50)
-    exam_session = models.CharField(max_length=3, choices=SESSION_IN_YEAR_CHOICES)
+    exam_session = models.CharField(max_length=1, choices=SESSION_IN_YEAR_CHOICES)
     date = models.DateField()
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
