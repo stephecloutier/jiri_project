@@ -1,6 +1,6 @@
-from django.urls import path, include
-from rest_framework import routers
-from Jiri.api import views
+# from django.urls import path, include
+# from rest_framework import routers
+# from Jiri.api import views
 
 from rest_framework.urlpatterns import format_suffix_patterns
 from Jiri.api import views
