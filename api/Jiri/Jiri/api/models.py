@@ -48,7 +48,7 @@ class Event(models.Model):
         (JUIN, 'Juin'),
         (SEPTEMBRE, 'Septembre'),
     )
-    course_name = models.CharField(max_lenght=50)
+    course_name = models.CharField(max_length=50)
     exam_session = models.CharField(max_length=3, choices=SESSION_IN_YEAR_CHOICES)
     date = models.DateField()
     user = models.ForeignKey('User', on_delete=models.CASCADE)
@@ -61,7 +61,7 @@ class Event(models.Model):
 class Implementation(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    event = models.ForeignKey('Event', on_delete=models.CASCASDE)
+    event = models.ForeignKey('Event', on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=3, decimal_places=2)
     url_project = models.URLField(blank=True, null=True)
     url_repo = models.URLField(blank=True, null=True)
@@ -85,7 +85,7 @@ class Meeting(models.Model):
 
 class Score(models.Model):
     score = models.DecimalField(max_digits=4, decimal_places=2)
-    comment = models.TextField()
+    comment = models.TextField(blank=True, null=True)
     meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)
     implementation = models.ForeignKey('Implementation', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
