@@ -18,8 +18,7 @@ class IsAdmin(permissions.BasePermission):
     """
     Custom permission to only allow admin users to access and edit an object.
     """
-    message = 'Vous devez être administrateur pour accèder à cette vue.'
 
+    message = 'Vous devez être administrateur pour accéder à cette vue.'
     def has_object_permission(self, request, view, obj):
-        print(request.user)
         return request.user.is_admin
