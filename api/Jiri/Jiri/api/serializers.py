@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
-from .models import User, Event, Student, Project, Implementation, Meeting, Score
+from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -56,16 +56,37 @@ class ScoreSerializer(serializers.HyperlinkedModelSerializer):
         score = validated_data.get('score', None)
         if score <= 20 and score >=0:
             validated_data.pop('score')
-            return User.objects.create(score=score, **validated_data)
+            return Score.objects.create(score=score, **validated_data)
         else:
-            raise serializers.ValidationError("Le score doit être compris entre 0 et 20 inclus.")
+            raise serializers.ValidationError('Le score doit être compris entre 0 et 20 inclus.')
     def update(self, instance, validated_data):
-        score = validated_data.get('score', None)
-        if score <= 20 and score >=0:
-            validated_data.pop('score')
-            return User.objects.update(score=score, **validated_data)
+        instance.score = validated_data.get('score', instance.score)
+        if instance.score <= 20 and instance.score >= 0:
+            instance.save()
+            return instance
         else:
-            raise serializers.ValidationError("Le score doit être compris entre 0 et 20 inclus.")
+            raise serializers.ValidationError('Le score doit être compris entre 0 et 20 inclus.')
     class Meta:
         model = Score
         fields = ('id', 'score', 'comment', 'meeting', 'implementation', 'deleted_at')
+
+
+class PerformanceSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
+    def create(self, validated_data):
+        final_score = validated_data.get('final_score', None)
+        if final_score <= 20 and final_score >= 0:
+            validated_data.pop('final_score')
+            return Performance.objects.create(final_score=final_score, **validated_data)
+        else:
+            raise serializers.ValidationError("Le score final doit être compris entre 0 et 20 inclus.")
+    def update(self, instance, validated_data):
+        instance.final_score = validated_data.get('final_score', instance.final_score)
+        if instance.final_score <= 20 and instance.final_score >=0:
+            instance.save()
+            return instance
+        else:
+            raise serializers.ValidationError('Le score doit être compris entre 0 et 20 inclus.')
+    class Meta:
+        model = Performance
+        fields = ('id', 'final_score', 'student', 'event', 'deleted_at')

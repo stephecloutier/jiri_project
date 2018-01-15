@@ -9,8 +9,8 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets
 from rest_framework import status
 
-from .models import User, Event, Student, Project, Implementation, Meeting, Score
-from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer, ScoreSerializer
+from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
+from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer, ScoreSerializer, PerformanceSerializer
 from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
 
 ## DJR Tutorial
@@ -24,6 +24,7 @@ def api_root(request, format=None):
     'implementations': reverse('implementation-list', request=request, format=format),
     'meetings': reverse('meeting-list', request=request, format=format),
     'scores': reverse('score-list', request=request, format=format),
+    'performances': reverse('performance-list', request=request, format=format),
 })
 
 
@@ -128,12 +129,17 @@ class ScoreViewSet(viewsets.ModelViewSet):
         score.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
+class PerformanceViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, IsAdmin)
+    queryset = Performance.objects.all()
+    serializer_class = PerformanceSerializer
 
-## old readonly for users
-# class UserViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     This viewset automatically provides 'list' and 'detail' actions.
-#     """
-#     permission_classes = (permissions.IsAuthenticated)
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
+    def destroy(self, request, pk):
+        performance = Performance.objects.get(id=pk)
+        performance.deleted_at = datetime.datetime.now()
+        performance.save()
+        return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+

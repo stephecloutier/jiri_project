@@ -16,7 +16,7 @@ router.register(r'events', views.EventViewSet)
 router.register(r'implementations', views.ImplementationViewSet)
 router.register(r'meetings', views.MeetingViewSet)
 router.register(r'scores', views.ScoreViewSet)
-
+router.register(r'performances', views.PerformanceViewSet)
 
 
 urlpatterns = [

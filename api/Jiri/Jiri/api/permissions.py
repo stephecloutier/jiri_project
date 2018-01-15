@@ -34,3 +34,12 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             return True
         
         return request.user.is_admin
+
+
+# class IsAdminOrOwner(permissions.BasePermission):
+#     """
+#     Custom permission ton only allow admin or owner to edit an object
+#     """
+
+#     def has_object_permission(self, request, view, obj):
+#         return obj.user == request.user or request.user.is_admin
