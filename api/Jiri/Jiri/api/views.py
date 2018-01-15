@@ -1,6 +1,6 @@
 from .models import User, Event
 from .serializers import UserSerializer, EventSerializer
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAdmin
 
 from rest_framework import generics
 from rest_framework import permissions
@@ -21,16 +21,28 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
+    permission_classes = (IsAdmin,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
 
-    def perform_create(selft, serializer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     """
-    This viewset automatically provides 'list' and 'detail' actions.
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+
+
+## old readonly for users
+# class UserViewSet(viewsets.ReadOnlyModelViewSet):
+#     """
+#     This viewset automatically provides 'list' and 'detail' actions.
+#     """
+#     permission_classes = (permissions.IsAuthenticated)
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
