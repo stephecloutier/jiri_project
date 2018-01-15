@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
-from .models import User, Event, Student, Project, Implementation, Meeting
+from .models import User, Event, Student, Project, Implementation, Meeting, Score
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    #events = serializers.HyperlinkedRelatedField(many=True, view_name='event-detail', read_only=True)
     meetings = serializers.HyperlinkedRelatedField(many=True, view_name='meeting-detail', read_only=True)
     deleted_at = serializers.CharField(read_only=True)
     def create(self, validated_data):
@@ -50,3 +49,23 @@ class MeetingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Meeting
         fields = ('id', 'user', 'student', 'event', 'deleted_at')
+
+class ScoreSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
+    def create(self, validated_data):
+        score = validated_data.get('score', None)
+        if score <= 20 and score >=0:
+            validated_data.pop('score')
+            return User.objects.create(score=score, **validated_data)
+        else:
+            raise serializers.ValidationError("Le score doit être compris entre 0 et 20 inclus.")
+    def update(self, instance, validated_data):
+        score = validated_data.get('score', None)
+        if score <= 20 and score >=0:
+            validated_data.pop('score')
+            return User.objects.update(score=score, **validated_data)
+        else:
+            raise serializers.ValidationError("Le score doit être compris entre 0 et 20 inclus.")
+    class Meta:
+        model = Score
+        fields = ('id', 'score', 'comment', 'meeting', 'implementation', 'deleted_at')
