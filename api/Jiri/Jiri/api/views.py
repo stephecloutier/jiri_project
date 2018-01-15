@@ -18,6 +18,8 @@ from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
 def api_root(request, format=None):
     return Response({
     'users': reverse('user-list', request=request, format=format),
+    'students': reverse('student-list', request=request, format=format),
+    'projects': reverse('project-list', request=request, format=format),
     'events': reverse('event-list', request=request, format=format)
 })
 
@@ -52,7 +54,14 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
-    pass
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    def destroy(self, request, pk):
+        project = Project.objects.get(id=pk)
+        project.deleted_at = datetime.datetime.now()
+        project.save()
+        return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
 class EventViewSet(viewsets.ModelViewSet):
     """
