@@ -39,6 +39,7 @@ class Project(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
 
+
 class Event(models.Model):
     PREMIERE = '1'
     SECONDE = '2'
@@ -55,6 +56,7 @@ class Event(models.Model):
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
         return self.course_name + ' ' + self.exam_date.strftime('%d %B %Y')
+
 
 class Implementation(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
@@ -95,6 +97,7 @@ class Score(models.Model):
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
         return self.meeting + ' ' + self.implementation
+
 
 class Performance(models.Model):
     final_score = models.DecimalField(max_digits=4, decimal_places=2)
