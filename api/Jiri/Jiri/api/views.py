@@ -1,6 +1,6 @@
-from .models import User, Event
-from .serializers import UserSerializer, EventSerializer
-from .permissions import IsOwnerOrReadOnly, IsAdmin
+from .models import User, Event, Student
+from .serializers import UserSerializer, EventSerializer, StudentSerializer
+from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
 
 from rest_framework import generics
 from rest_framework import permissions
@@ -17,6 +17,23 @@ def api_root(request, format=None):
     'events': reverse('event-list', request=request, format=format)
 })
 
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, IsAdmin)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class StudentViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
 class EventViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
@@ -27,15 +44,6 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
-    """
-    permission_classes = (permissions.IsAuthenticated, IsAdmin)
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    
 
 
 ## old readonly for users

@@ -9,8 +9,10 @@ schema_view = get_schema_view(title='Pastebin API')
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'events', views.EventViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'students', views.StudentViewSet)
+router.register(r'events', views.EventViewSet)
+
 
 
 urlpatterns = [

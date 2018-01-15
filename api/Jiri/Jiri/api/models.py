@@ -23,7 +23,6 @@ class User(AbstractUser):
 class Student(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
     profile_pic = models.ImageField(upload_to='uploads/students/', default='default-pic.png')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
