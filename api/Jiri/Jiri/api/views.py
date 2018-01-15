@@ -9,8 +9,8 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets
 from rest_framework import status
 
-from .models import User, Event, Student, Project, Implementation
-from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer
+from .models import User, Event, Student, Project, Implementation, Meeting
+from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer
 from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
 
 ## DJR Tutorial
@@ -22,6 +22,7 @@ def api_root(request, format=None):
     'projects': reverse('project-list', request=request, format=format),
     'events': reverse('event-list', request=request, format=format),
     'implementations': reverse('implementation-list', request=request, format=format),
+    'meetings': reverse('meeting-list', request=request, format=format),
 })
 
 
@@ -85,7 +86,7 @@ class ImplementationViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
     queryset = Implementation.objects.all()
     serializer_class = ImplementationSerializer
 
@@ -93,6 +94,23 @@ class ImplementationViewSet(viewsets.ModelViewSet):
         implementation = Implementation.objects.get(id=pk)
         implementation.deleted_at = datetime.datetime.now()
         implementation.save()
+        return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+
+class MeetingViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, )
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def destroy(self, request, pk):
+        meeting = Meeting.objects.get(id=pk)
+        meeting.deleted_at = datetime.datetime.now()
+        meeting.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
 

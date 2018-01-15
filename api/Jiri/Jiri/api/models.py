@@ -75,18 +75,18 @@ class Implementation(models.Model):
               self.weight = self.project.default_weight
         super(Implementation, self).save(*args, **kwargs)
     def __str__(self):
-        return self.student + ' ' + self.project.name + ' ' + self.event
+        return str(self.student.id) + ' ' + self.project.name + ' ' + str(self.event.id)
 
 
 class Meeting(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='meetings')
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     event = models.ForeignKey('Event', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
-        return self.user + ' ' + self.student+ ' ' + self.event
+        return self.user.username + ' ' + str(self.student.id) + ' ' + str(self.event.id)
 
 
 class Score(models.Model):

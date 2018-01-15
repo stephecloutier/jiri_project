@@ -5,7 +5,8 @@ from .models import User, Event, Student, Project, Implementation, Meeting
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    events = serializers.HyperlinkedRelatedField(many=True, view_name='event-detail', read_only=True)
+    #events = serializers.HyperlinkedRelatedField(many=True, view_name='event-detail', read_only=True)
+    meetings = serializers.HyperlinkedRelatedField(many=True, view_name='meeting-detail', read_only=True)
     deleted_at = serializers.CharField(read_only=True)
     def create(self, validated_data):
         password = make_password(validated_data.get('password', None))
@@ -14,7 +15,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'profile_pic', 'is_admin', 'events', 'deleted_at')
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'profile_pic', 'is_admin', 'meetings', 'deleted_at')
 
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
@@ -32,7 +33,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
-    user = serializers.ReadOnlyField(source='user.username')
+    user = serializers.ReadOnlyField(source='user.id')
     class Meta:
         model = Event
         fields = ('id', 'course_name', 'exam_session', 'exam_date', 'user', 'deleted_at')
@@ -42,3 +43,10 @@ class ImplementationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Implementation
         fields = ('id', 'event', 'student', 'project', 'weight', 'url_project', 'url_repo', 'deleted_at')
+
+class MeetingSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
+    user = serializers.ReadOnlyField(source='user.id')
+    class Meta:
+        model = Meeting
+        fields = ('id', 'user', 'student', 'event', 'deleted_at')
