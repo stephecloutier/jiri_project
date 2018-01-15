@@ -11,7 +11,7 @@ from rest_framework import status
 
 from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer, ScoreSerializer, PerformanceSerializer
-from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly, IsAdminOrOwnerOfScore
 
 ## DJR Tutorial
 @api_view(['GET'])
@@ -119,7 +119,7 @@ class ScoreViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrOwnerOfScore)
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
 

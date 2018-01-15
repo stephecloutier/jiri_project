@@ -36,10 +36,10 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         return request.user.is_admin
 
 
-# class IsAdminOrOwner(permissions.BasePermission):
-#     """
-#     Custom permission ton only allow admin or owner to edit an object
-#     """
+class IsAdminOrOwnerOfScore(permissions.BasePermission):
+    """
+    Custom permission ton only allow admin or owner to edit an object
+    """
 
-#     def has_object_permission(self, request, view, obj):
-#         return obj.user == request.user or request.user.is_admin
+    def has_object_permission(self, request, view, obj):
+        return obj.meeting.user == request.user or request.user.is_admin
