@@ -9,8 +9,8 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets
 from rest_framework import status
 
-from .models import User, Event, Student, Project
-from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer
+from .models import User, Event, Student, Project, Implementation
+from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer
 from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly
 
 ## DJR Tutorial
@@ -20,7 +20,8 @@ def api_root(request, format=None):
     'users': reverse('user-list', request=request, format=format),
     'students': reverse('student-list', request=request, format=format),
     'projects': reverse('project-list', request=request, format=format),
-    'events': reverse('event-list', request=request, format=format)
+    'events': reverse('event-list', request=request, format=format),
+    'implementations': reverse('implementation-list', request=request, format=format),
 })
 
 
@@ -78,6 +79,20 @@ class EventViewSet(viewsets.ModelViewSet):
         event = Event.objects.get(id=pk)
         event.deleted_at = datetime.datetime.now()
         event.save()
+        return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+
+class ImplementationViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, )
+    queryset = Implementation.objects.all()
+    serializer_class = ImplementationSerializer
+
+    def destroy(self, request, pk):
+        implementation = Implementation.objects.get(id=pk)
+        implementation.deleted_at = datetime.datetime.now()
+        implementation.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
 

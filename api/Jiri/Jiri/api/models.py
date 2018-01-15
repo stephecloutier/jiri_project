@@ -38,6 +38,8 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
+    def __str__(self):
+        return self.name 
 
 
 class Event(models.Model):
@@ -62,7 +64,7 @@ class Implementation(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
     event = models.ForeignKey('Event', on_delete=models.CASCADE)
-    weight = models.DecimalField(max_digits=3, decimal_places=2)
+    weight = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
     url_project = models.URLField(blank=True, null=True)
     url_repo = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

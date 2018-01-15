@@ -13,6 +13,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'students', views.StudentViewSet)
 router.register(r'projects', views.ProjectViewSet)
 router.register(r'events', views.EventViewSet)
+router.register(r'implementations', views.ImplementationViewSet)
 
 
 
