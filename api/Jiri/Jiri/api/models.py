@@ -98,7 +98,7 @@ class Score(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     def __str__(self):
-        return self.meeting + ' ' + self.implementation
+        return str(self.meeting.id) + ' ' + str(self.implementation.id)
 
 
 class Performance(models.Model):

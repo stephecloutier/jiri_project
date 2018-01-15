@@ -11,7 +11,7 @@ from rest_framework import status
 
 from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer, ScoreSerializer, PerformanceSerializer
-from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly, IsAdminOrOwnerOfScore
+from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly, IsAdminOrOwnerOfScore, IsAdminOrOwner
 
 ## DJR Tutorial
 @api_view(['GET'])
@@ -32,7 +32,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
-    permission_classes = (permissions.IsAuthenticated, IsAdmin)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrOwner)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     def destroy(self, request, pk):

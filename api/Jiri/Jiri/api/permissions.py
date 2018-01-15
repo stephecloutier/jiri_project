@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from pprint import pprint
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -40,6 +41,13 @@ class IsAdminOrOwnerOfScore(permissions.BasePermission):
     """
     Custom permission ton only allow admin or owner to edit an object
     """
-
     def has_object_permission(self, request, view, obj):
         return obj.meeting.user == request.user or request.user.is_admin
+
+
+class IsAdminOrOwner(permissions.BasePermission):
+    """
+    Custom permission ton only allow admin or owner to edit an object
+    """
+    def has_object_permission(self, request, view, obj):
+        return obj == request.user or request.user.is_admin

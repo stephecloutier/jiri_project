@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from pprint import pprint
 
 from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 
@@ -11,6 +12,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         password = make_password(validated_data.get('password', None))
         validated_data.pop("password")
         return User.objects.create(password=password, **validated_data)
+    def update(self, instance, validated_data):
+        pprint(validated_data.get('password', None))
+        if validated_data.get('password', None) is None:
+            return instance
+        instance.password = make_password(validated_data.get('password', None))
+        instance.save()
+        return instance
+        
 
     class Meta:
         model = User
