@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
-from .models import User, Event, Student, Project, Implementation
+from .models import User, Event, Student, Project, Implementation, Meeting
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,23 +18,27 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Student
         fields = ('id', 'first_name', 'last_name', 'profile_pic', 'deleted_at')
 
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Project
         fields = ('id', 'name', 'description', 'default_weight', 'deleted_at')
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Event
         fields = ('id', 'course_name', 'exam_session', 'exam_date', 'user', 'deleted_at')
 
 class ImplementationSerializer(serializers.HyperlinkedModelSerializer):
+    deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Implementation
         fields = ('id', 'event', 'student', 'project', 'weight', 'url_project', 'url_repo', 'deleted_at')
