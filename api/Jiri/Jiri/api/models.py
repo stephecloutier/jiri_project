@@ -7,13 +7,14 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.EmailField(unique=True)
+    password = models.CharField(max_length=100)
     profile_pic = models.ImageField(upload_to='uploads/users/', default='default-pic.png')
     is_admin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(default=None, blank=True, null=True)
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'is_admin']
+    REQUIRED_FIELDS = ['email', 'password', 'first_name', 'last_name', 'is_admin']
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
