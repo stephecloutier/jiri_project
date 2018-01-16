@@ -8,21 +8,33 @@ from .models import User, Event, Student, Project, Implementation, Meeting, Scor
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     meetings = serializers.HyperlinkedRelatedField(many=True, view_name='meeting-detail', read_only=True)
     deleted_at = serializers.CharField(read_only=True)
+
     def create(self, validated_data):
-        password = make_password(validated_data.get('password', None))
-        validated_data.pop("password")
-        return User.objects.create(password=password, **validated_data)
+        validation_errors = []
+        if self.context['request'].user.is_admin:
+            password = make_password(validated_data.get('password', None))
+            validated_data.pop("password")
+            return User.objects.create(password=password, **validated_data)
+        else:
+            validation_errors.append('Vous devez être administrateur pour créer un utilisateur.')
+            raise serializers.ValidationError(validation_errors)
+
     def update(self, instance, validated_data):
+        validation_errors = []
         if validated_data.get('password', None) is not None:
             instance.password = make_password(validated_data.get('password', None))
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.username = validated_data.get('username', instance.username)
         instance.profile_pic = validated_data.get('profile_pic', instance.profile_pic)
-        if self.context['request'].user.is_admin:
-            instance.is_admin = validated_data.get('is_admin', instance.is_admin)
-        else:
-            raise serializers.ValidationError('Vous devez être administrateur pour modifier votre statue admin.')
+        if validated_data.get('is_admin', None) is not None:
+            if self.context['request'].user.is_admin:
+                instance.is_admin = validated_data.get('is_admin', instance.is_admin)
+            else:
+                validation_errors.append('Vous devez être administrateur pour modifier votre statut admin.')
+
+        if validation_errors:
+            raise serializers.ValidationError(validation_errors)
         return instance
         
     class Meta:
