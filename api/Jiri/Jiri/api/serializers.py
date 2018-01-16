@@ -5,8 +5,8 @@ from pprint import pprint
 from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    meetings = serializers.HyperlinkedRelatedField(many=True, view_name='meeting-detail', read_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    meetings = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     deleted_at = serializers.CharField(read_only=True)
 
     def create(self, validated_data):
@@ -42,40 +42,40 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'username', 'password', 'first_name', 'last_name', 'profile_pic', 'is_admin', 'meetings', 'deleted_at')
 
 
-class StudentSerializer(serializers.HyperlinkedModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Student
         fields = ('id', 'first_name', 'last_name', 'profile_pic', 'deleted_at')
 
 
-class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Project
         fields = ('id', 'name', 'description', 'default_weight', 'deleted_at')
 
-class EventSerializer(serializers.HyperlinkedModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     user = serializers.ReadOnlyField(source='user.id')
     class Meta:
         model = Event
         fields = ('id', 'course_name', 'exam_session', 'exam_date', 'user', 'deleted_at')
 
-class ImplementationSerializer(serializers.HyperlinkedModelSerializer):
+class ImplementationSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Implementation
         fields = ('id', 'event', 'student', 'project', 'weight', 'url_project', 'url_repo', 'deleted_at')
 
-class MeetingSerializer(serializers.HyperlinkedModelSerializer):
+class MeetingSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     user = serializers.ReadOnlyField(source='user.id')
     class Meta:
         model = Meeting
         fields = ('id', 'user', 'student', 'event', 'deleted_at')
 
-class ScoreSerializer(serializers.HyperlinkedModelSerializer):
+class ScoreSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     def create(self, validated_data):
         score = validated_data.get('score', None)
@@ -95,7 +95,7 @@ class ScoreSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'score', 'comment', 'meeting', 'implementation', 'deleted_at')
 
 
-class PerformanceSerializer(serializers.HyperlinkedModelSerializer):
+class PerformanceSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     def create(self, validated_data):
         final_score = validated_data.get('final_score', None)
