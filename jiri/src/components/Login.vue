@@ -1,58 +1,43 @@
 <template>
-    <!-- <form action="." method="POST"> -->
-        <div>
-            <input type="email">
-            <input type="password">
-            <input type="submit" value="Se connecter" v-on:click="login">
+    <div>
+        <input type="email" v-model="user.email">
+        <input type="password" v-model="user.password" @keyup.enter="login">
+        <input type="submit" value="Se connecter" v-on:click="login">
+
+        <div class="errors">
+            <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
         </div>
-    <!-- </form> -->
+    </div>
 </template>
 
 <script>
     import { mapGetters, mapMutations } from 'vuex'
-    import {HTTP} from '../http-common'
-    import Cookies from 'js-cookie'
+    import router from '../router'
 
     export default {
         name: 'login',
+        data() {
+            return {
+                user: {email: '', password: ''}
+            }
+        },
         computed: {
             ...mapGetters([
-                'getTest',
+                'getErrors',
             ]),
         },
         methods: {
             login() {
-                const token = ''
-                //const csrftoken = Cookies.get('csrftoken')
-                HTTP.post('get_auth_token/', {
-                    username: 'user@mail.com',
-                    password: 'motdepasse'
+                this.$store.dispatch('login', this.user).then(() => {
+                    this.$router.replace('home')
+                }).catch((error) => {
+                    console.log(error)
                 })
-                    .then((response) => {
-                        this.token = response.data.token
-                        console.log(this.token)
-                        //localStorage.setItem('token', response.data.token)
-                        HTTP.get('users/', {
-                            headers: {
-                                'Authorization': 'Token ' + this.token
-                            }
-                        })
-                            .then((response) => {
-                                console.log(response)
-                                //localStorage.setItem('token', response.data.token)
-                            })
-                            .catch((error) => {
-                                //console.log("Error login")
-                                console.log(error)
-                            })
-                    })
-                    .catch((error) => {
-                        //console.log("Error login")
-                        console.log(error)
-                    })
+                this.user = {email: '', password: ''}
             }
         }
     }
-
     
 </script>
+
+
