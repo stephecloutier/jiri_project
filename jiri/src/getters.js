@@ -13,5 +13,8 @@ export const getters = {
             return 'dashboard';
         }
         return 'meetings';
+    },
+    getCurrentEventStudentsList(state) {
+        return state.currentEventStudentsList
     }
 }

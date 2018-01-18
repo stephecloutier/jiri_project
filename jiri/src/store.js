@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
         token: '',
         user: {},
         errors: [],
+        currentEvent: {},
+        currentEventStudentsList: [],
     },
     getters,
     mutations,

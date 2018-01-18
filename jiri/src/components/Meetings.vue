@@ -1,14 +1,22 @@
 <template>
     <div>
-        <h1>Bravo tu es connecté, non administrateur !</h1>
-
         <div class="loading" v-if="loading">
             Loading...
         </div>
+        <div class="main-content" v-else>
+            <h2>Rencontrer un étudiant</h2>
+            <select name="students" v-model="selectedStudentId">
+                <option v-for="student in this.getCurrentEventStudentsList" :key="student.id" :value="student.id" selected>
+                    {{ student.first_name + ' ' + student.last_name }}
+                </option>
+            </select>
+            <input type="submit" value="Débuter la rencontre">
+        </div>
 
+        <!-- to handle later
         <div class="errors" v-if="getErrors">
             <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
-        </div>
+        </div>-->
     </div>
 </template>
 
@@ -20,28 +28,39 @@
         data() {
             return {
                 loading: false,
+                selectedStudentId: null,
             }
         },
         computed: {
             ...mapGetters([
                 'getErrors',
+                'getCurrentEventStudentsList'
             ]),
         },
         created () {
-            // have to get data for the CURRENT event (or closest)
             this.fetchData()
         },
         methods: {
             fetchData() {
                 this.loading = true
-                this.$store.dispatch('fetchEvent')
+                this.$store.dispatch('fetchClosestEvent')
                     .then((response) => {
-                        this.loading = false
-                        console.log(response)
+                        this.$store.dispatch('fetchCurrentEventStudentsList')
+                            .then((response) => {
+                                this.selectedStudentId = this.getCurrentEventStudentsList[0].id
+                                this.loading = false
+                            }).catch((error) => {
+                                console.log(error)
+                            })
+
                     }).catch((error) => {
                         console.log(error)
                     })
-            }
+            },
+            changeSelectedStudent($event) {
+                this.selectedStudent = $event
+                console.log($event)
+            },
         }
     }
 </script>
