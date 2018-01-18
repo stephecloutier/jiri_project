@@ -86,7 +86,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
     """
-    permission_classes = (permissions.IsAuthenticated, IsAdmin)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
