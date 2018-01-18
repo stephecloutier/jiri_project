@@ -10,9 +10,22 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets
 from rest_framework import status
 
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
 from .models import User, Event, Student, Project, Implementation, Meeting, Score, Performance
 from .serializers import UserSerializer, EventSerializer, StudentSerializer, ProjectSerializer, ImplementationSerializer, MeetingSerializer, ScoreSerializer, PerformanceSerializer
 from .permissions import IsOwnerOrReadOnly, IsAdmin, IsAdminOrReadOnly, IsAdminOrOwnerOfScore, IsAdminOrOwner
+
+# Auth token + user ID
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        return Response({'token': token.key, 'id': token.user_id})
+
+
 
 ## DJR Tutorial
 @api_view(['GET'])

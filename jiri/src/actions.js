@@ -2,15 +2,26 @@ import {HTTP} from './http-common'
 
 export const actions = {
     login({commit}, user) {
-        HTTP.post('get_auth_token/', {
-            username: user.email,
-            password: user.password
+        return new Promise((resolve, reject) => {
+            HTTP.post('authenticate/', {
+                username: user.email,
+                password: user.password
+            })
+                .then((response) => {
+                    commit('saveToken', response.data.token)
+                    resolve(response);
+                })
+                .catch((error) => {
+                    commit('saveErrors', error.response.data)
+                    reject(error);
+                })
         })
-            .then((response) => {
-                commit('saveToken', response.data.token)
-            })
-            .catch((error) => {
-                commit('saveErrors', error.response.data)
-            })
-    }
+    },
+
+    getHomePage(state, token) {
+        console.log(token)
+        // return new Promise((resolve, reject) => {
+        //     //
+        // }
+    },
 }
