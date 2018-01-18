@@ -9,6 +9,7 @@ export const actions = {
             })
                 .then((response) => {
                     commit('saveToken', response.data.token)
+                    commit('saveUserId', response.data.id)
                     resolve(response);
                 })
                 .catch((error) => {
@@ -18,10 +19,21 @@ export const actions = {
         })
     },
 
-    getHomePage(state, token) {
-        console.log(token)
-        // return new Promise((resolve, reject) => {
-        //     //
-        // }
+    getUserInfo(context, id) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('users/' + id + '/', {
+                headers: {
+                    'Authorization': 'Token ' + context.state.token
+                }
+            })
+                .then((response) => {
+                    context.commit('saveUserInfo', response.data)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
     },
 }

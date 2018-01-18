@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input type="email" v-model="user.email">
-        <input type="password" v-model="user.password" @keyup.enter="login">
+        <input type="email" v-model="currentUser.email">
+        <input type="password" v-model="currentUser.password" @keyup.enter="login">
         <input type="submit" value="Se connecter" v-on:click="login">
         <div class="errors">
             <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
@@ -17,21 +17,27 @@
         name: 'login',
         data() {
             return {
-                user: {email: '', password: ''}
+                currentUser: {email: '', password: ''},
             }
         },
         computed: {
             ...mapGetters([
                 'getErrors',
-                'getToken',
+                'getUserId',
+                'getHomePageUrl',
             ]),
         },
         methods: {
             login() {
-                this.$store.dispatch('login', this.user)
+                this.$store.dispatch('login', this.currentUser)
                     .then((response) => {
-                        this.$store.dispatch('getHomePage', this.getToken)
-                        this.user = {email: '', password: ''}
+                        this.currentUser = {email: '', password: ''}
+                        this.$store.dispatch('getUserInfo', this.getUserId)
+                            .then((response) => {
+                                router.push(this.getHomePageUrl)
+                            }).catch((error) => {
+                                console.log(error)
+                            })
                     }).catch((error) => {
                         console.log(error)
                     })

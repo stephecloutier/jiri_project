@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Home from '@/components/Home'
+import Meetings from '@/components/Meetings'
+import Dashboard from '@/components/Dashboard'
 
 
 Vue.use(Router)
@@ -14,9 +15,14 @@ export default new Router({
       component: Login
     },
     {
-      path: '/home',
-      name: 'Home',
-      component: Home
+      path: '/meetings',
+      name: 'Meetings',
+      component: Meetings
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     }
   ]
 })

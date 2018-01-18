@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>Bravo tu es connecté</h1>
-        <h2>{{ getToken }}</h2>
+        <h1>Bravo tu es connecté, administrateur !</h1>
     </div>
 </template>
 
@@ -10,10 +9,10 @@
     //import router from '../router'
 
     export default {
-        name: 'home',
+        name: 'Dashboard',
         computed: {
             ...mapGetters([
-                'getToken',
+                // 'getToken',
             ]),
         },
         created () {
