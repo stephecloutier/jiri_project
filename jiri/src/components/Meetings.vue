@@ -1,44 +1,50 @@
 <template>
     <div>
         <h1>Bravo tu es connecté, non administrateur !</h1>
+
+        <div class="loading" v-if="loading">
+            Loading...
+        </div>
+
+        <div class="errors" v-if="getErrors">
+            <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
+        </div>
     </div>
 </template>
 
 <script>
     import { mapGetters, mapMutations } from 'vuex'
-    //import router from '../router'
 
     export default {
         name: 'meetings',
+        data() {
+            return {
+                loading: false,
+            }
+        },
         computed: {
             ...mapGetters([
-                // 'getToken',
+                'getErrors',
             ]),
         },
         created () {
-            //this.$store.dispatch('getHome')
+            // have to get data for the CURRENT event (or closest) -> currently, non-admin cannot get info from events -> have to fix that
+            this.fetchData()
         },
+        methods: {
+            fetchData() {
+                this.loading = true
+                this.$store.dispatch('fetchEvent')
+                    .then((response) => {
+                        this.loading = false
+                        console.log(response)
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            }
+        }
     }
 </script>
-
-<!--
-<template>
-  <div class="post">
-    <div class="loading" v-if="loading">
-      Loading...
-    </div>
-
-    <div v-if="error" class="error">
-      {{ error }}
-    </div>
-
-    <div v-if="post" class="content">
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.body }}</p>
-    </div>
-  </div>
-</template>-->
-
 // export default {
 //   data () {
 //     return {

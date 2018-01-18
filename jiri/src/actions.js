@@ -36,4 +36,21 @@ export const actions = {
                 })
         })
     },
+
+    fetchEvent(context) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('events/', {
+                headers: {
+                    'Authorization': 'Token ' + context.state.token
+                }
+            })
+                .then((response) => {
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    }
 }
