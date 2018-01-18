@@ -56,11 +56,13 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'default_weight', 'deleted_at')
 
 class EventSerializer(serializers.ModelSerializer):
+    projects = serializers.PrimaryKeyRelatedField(many=True, queryset=Project.objects.all())
+    students = serializers.PrimaryKeyRelatedField(many=True, queryset=Student.objects.all())
+    users = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
     deleted_at = serializers.CharField(read_only=True)
-    user = serializers.ReadOnlyField(source='user.id')
     class Meta:
         model = Event
-        fields = ('id', 'course_name', 'exam_session', 'exam_date', 'user', 'deleted_at')
+        fields = ('id', 'course_name', 'exam_session', 'exam_date', 'projects', 'students', 'users', 'deleted_at')
 
 class ImplementationSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)

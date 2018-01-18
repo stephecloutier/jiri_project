@@ -90,9 +90,6 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
     def destroy(self, request, pk):
         event = Event.objects.get(id=pk)
         event.deleted_at = datetime.datetime.now()
