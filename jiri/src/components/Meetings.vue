@@ -28,7 +28,7 @@
             ]),
         },
         created () {
-            // have to get data for the CURRENT event (or closest) -> currently, non-admin cannot get info from events -> have to fix that
+            // have to get data for the CURRENT event (or closest)
             this.fetchData()
         },
         methods: {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="email" v-model="currentUser.email">
+        <input type="email" v-model="currentUser.email" @keyup.enter="login">
         <input type="password" v-model="currentUser.password" @keyup.enter="login">
         <input type="submit" value="Se connecter" v-on:click="login">
         <div class="errors" v-if="getErrors">
