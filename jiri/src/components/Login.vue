@@ -3,7 +3,7 @@
         <input type="email" v-model="currentUser.email">
         <input type="password" v-model="currentUser.password" @keyup.enter="login">
         <input type="submit" value="Se connecter" v-on:click="login">
-        <div class="errors">
+        <div class="errors" v-if="getErrors">
             <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
         </div>
     </div>
