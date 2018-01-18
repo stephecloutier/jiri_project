@@ -39,6 +39,7 @@ export const actions = {
 
     // fetches events from api, find the one with the closest exam_date, store its info in the state
     fetchClosestEvent(context) {
+        //console.log(context)
         return new Promise((resolve, reject) => {
             HTTP.get('events/', {
                 headers: {
@@ -73,6 +74,8 @@ export const actions = {
 
     fetchCurrentEventStudentsList(context) {
         return new Promise((resolve, reject) => {
+            //console.log(context.state.token)
+
             HTTP.get('students/', {
                 headers: {
                     'Authorization': 'Token ' + context.state.token

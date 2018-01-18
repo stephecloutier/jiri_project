@@ -1,4 +1,7 @@
 export const getters = {
+    getState(state) {
+        return state
+    },
     getErrors(state) {
         return state.errors
     },

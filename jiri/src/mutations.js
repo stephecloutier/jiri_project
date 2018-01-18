@@ -1,4 +1,13 @@
+import Vue from 'vue'
+
 export const mutations = {
+    setInitialValueOfState(state, data) {
+        state.token = data.token
+        state.user = data.user,
+        state.errors = data.errors,
+        state.currentEvent = data.currentEvent,
+        state.currentEventStudentsList = data.currentEventStudentsList
+    },
     saveToken(state, token) {
         state.token = token
     },
