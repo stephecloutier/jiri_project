@@ -32,7 +32,7 @@
                 this.$store.dispatch('login', this.currentUser)
                     .then((response) => {
                         this.currentUser = {email: '', password: ''}
-                        this.$store.dispatch('getUserInfo', this.getUserId)
+                        this.$store.dispatch('getUserInfo', response.data.id)
                             .then((response) => {
                                 router.push(this.getHomePageUrl)
                             }).catch((error) => {
@@ -42,7 +42,7 @@
                         console.log(error)
                     })
             }
-        }
+        },
     }
     
 </script>

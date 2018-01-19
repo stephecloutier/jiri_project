@@ -17,6 +17,9 @@ export const getters = {
         }
         return 'meetings';
     },
+    getCurrentEvent(state) {
+        return state.currentEvent
+    },
     getCurrentEventStudentsList(state) {
         return state.currentEventStudentsList
     },

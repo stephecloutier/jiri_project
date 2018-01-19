@@ -26,8 +26,16 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+import router from '../router'
+
     export default {
         name: 'navigation',
+        methods: {
+            logout() {
+                this.$store.dispatch('logout')
+            }
+        }
     }
 </script>
 

@@ -19,6 +19,10 @@ export const actions = {
         })
     },
 
+    logout(context) {
+        context.commit('clearStoreAndState')
+    },
+
     getUserInfo(context, id) {
         return new Promise((resolve, reject) => {
             HTTP.get('users/' + id + '/', {
@@ -61,7 +65,7 @@ export const actions = {
                         } 
                     });
                     context.commit('saveCurrentEvent', response.data.results[eventDate.index])
-                    resolve(response)
+                    resolve(response.data.results[eventDate.index])
                 })
                 .catch((error) => {
                     console.log(error)
@@ -71,9 +75,9 @@ export const actions = {
         })
     },
 
-    fetchCurrentEventStudentsList(context) {
+    fetchCurrentEventStudentsList(context, eventId) {
         return new Promise((resolve, reject) => {
-            HTTP.get('students/event/?event=' + context.state.currentEvent.id, {
+            HTTP.get('students/event/?event=' + eventId, {
                 headers: {
                     'Authorization': 'Token ' + context.state.token
                 }

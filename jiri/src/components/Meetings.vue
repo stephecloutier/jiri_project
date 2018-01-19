@@ -62,7 +62,7 @@
                 this.loading = true
                 this.$store.dispatch('fetchClosestEvent')
                     .then((response) => {
-                        this.$store.dispatch('fetchCurrentEventStudentsList')
+                        this.$store.dispatch('fetchCurrentEventStudentsList', response.id)
                             .then((response) => {
                                 this.selectedStudentId = this.getCurrentEventStudentsList[0].id
                                 this.loading = false
