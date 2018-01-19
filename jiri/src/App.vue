@@ -27,11 +27,9 @@ export default {
   created() {
     let stateFromStorage = JSON.parse(localStorage.getItem("datas")) || [];
     this.setInitialValueOfState(stateFromStorage);
-    //console.log(stateFromStorage)
   },
   updated() {
     localStorage.setItem("datas", JSON.stringify(this.getState));
-    // console.log(localStorage.getItem('datas'));
   }
 };
 </script>
