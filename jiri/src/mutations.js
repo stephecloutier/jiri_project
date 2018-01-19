@@ -6,7 +6,9 @@ export const mutations = {
         state.user = data.user,
         state.errors = data.errors,
         state.currentEvent = data.currentEvent,
-        state.currentEventStudentsList = data.currentEventStudentsList
+        state.currentEventStudentsList = data.currentEventStudentsList,
+        state.pastMeetings = data.pastMeetings
+        state.studentsFromPastMeetings = data.studentsFromPastMeetings
     },
     saveToken(state, token) {
         state.token = token
@@ -34,4 +36,12 @@ export const mutations = {
     currentEventStudentsList(state, data) {
         state.currentEventStudentsList = data
     },
+    pastMeetings(state, data) {
+        state.pastMeetings = data
+    },
+    studentsFromPastMeetings(state, data) {
+        state.studentsFromPastMeetings = data
+    }
 }
+
+

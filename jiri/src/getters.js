@@ -19,5 +19,11 @@ export const getters = {
     },
     getCurrentEventStudentsList(state) {
         return state.currentEventStudentsList
+    },
+    getPastMeetings(state) {
+        return state.pastMeetings
+    },
+    getStudentsFromPastMeetings(state) {
+        return state.studentsFromPastMeetings
     }
 }

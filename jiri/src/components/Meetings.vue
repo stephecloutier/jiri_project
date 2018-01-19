@@ -13,21 +13,24 @@
                 </select>
                 <input type="submit" value="Débuter la rencontre" @click.prevent="startMeeting">
             </div>
-            <!--
-            <div class="past-meetings" v-if="pastMeetings">
+            
+            <div class="past-meetings">
                 <h2>Étudiants déjà rencontrés</h2>
-                <ul>
-                    <li v-for="meeting in pastMeetings" :key="meeting.id" @click.prevent="getMeeting">
-                        {{ meeting.student.first_name + meeting.student.last_name }}
+                <div v-if="getPastMeetings == false">
+                        Vous n'avez encore rencontré aucun étudiant, débutez une rencontre&nbsp;!
+                </div>
+                <ul v-else>
+                    <li v-for="student in this.getStudentsFromPastMeetings" :key="student.id" @click.prevent="getMeeting(student.id)">
+                        {{ student.first_name + ' ' + student.last_name }}
                     </li>
                 </ul>
-            </div>-->
+            </div>
         </div>
 
-        <!-- to handle later
+        <!-- To handle later on -->
         <div class="errors" v-if="getErrors">
             <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
-        </div>-->
+        </div>
     </div>
 </template>
 
@@ -47,7 +50,8 @@
             ...mapGetters([
                 'getErrors',
                 'getCurrentEventStudentsList',
-                'pastMeetings',
+                'getPastMeetings',
+                'getStudentsFromPastMeetings',
             ]),
         },
         created () {
@@ -70,7 +74,7 @@
                     })
                 this.$store.dispatch('fetchPastMeetings')
                     .then((response) => {
-                        console.log(response)
+                        this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
                     }).catch((error) => {
                         console.log(error)
                     })
@@ -81,13 +85,20 @@
             },
             startMeeting() {
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
-                .then((response) => {
-                    console.log(response)
-                    router.push('meetings/' + response.data.id)
+                    .then((response) => {
+                        if(response) {
+                            router.push(response.data.id + '/')
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            },
+            getMeeting(id) {
+                let studentMeeting = this.getPastMeetings.find((meeting) => {
+                    return meeting.student == id
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
+                router.push(studentMeeting.id + '/')
             }
         }
     }

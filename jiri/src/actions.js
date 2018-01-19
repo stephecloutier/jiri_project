@@ -73,16 +73,13 @@ export const actions = {
 
     fetchCurrentEventStudentsList(context) {
         return new Promise((resolve, reject) => {
-            HTTP.get('students/', {
+            HTTP.get('students/event/?event=' + context.state.currentEvent.id, {
                 headers: {
                     'Authorization': 'Token ' + context.state.token
                 }
             })
                 .then((response) => {
-                    let currentEventStudents = response.data.results.filter((student) => {
-                        return (context.state.currentEvent.students.find((id) => {return student.id == id})) == undefined ? false : true 
-                    })
-                    context.commit('currentEventStudentsList', currentEventStudents)
+                    context.commit('currentEventStudentsList', response.data)
                     resolve(true)
                 })
                 .catch((error) => {
@@ -93,19 +90,14 @@ export const actions = {
 
     fetchPastMeetings(context) {
         return new Promise((resolve, reject) => {
-            HTTP.get('meetings/', {
+            HTTP.get('meetings/user/?event=' + context.state.currentEvent.id, {
                 headers: {
                     'Authorization': 'Token ' + context.state.token
                 }
             })
                 .then((response) => {
-                    //console.log(response)
-                    //console.log(context.state.user.id)
-                    let pastMeetings = response.data.results.filter((meeting) => {
-                        return meeting.user == context.state.user.id
-                    })
-                    //console.log(pastMeetings)
-                    resolve(pastMeetings)
+                    context.commit('pastMeetings', response.data)
+                    resolve(true)
                 })
                 .catch((error) => {
                     reject(error)
@@ -114,7 +106,21 @@ export const actions = {
         })
     },
 
+    getStudentsFromPastMeetings(context, pastMeetings) {
+        let studentsFromPastMeetings = Array()
+        pastMeetings.forEach((meeting) => {
+            studentsFromPastMeetings.push(context.state.currentEventStudentsList.find((student) => {
+                return student.id == meeting.student
+            }))
+        })
+        context.commit('studentsFromPastMeetings', studentsFromPastMeetings)
+    },
+
     startMeeting(context, selectedStudentId) {
+        if(context.state.pastMeetings.find((meeting) => meeting.student == selectedStudentId)) {
+            context.commit('saveErrors', 'Vous avez déjà rencontré l\'étudiant sélectionné')
+            return false;
+        }
         let data = {
             user: context.state.user.id,
             student: selectedStudentId,
@@ -134,5 +140,5 @@ export const actions = {
                     reject(error)
                 })
         })
-    }
+    },
 }

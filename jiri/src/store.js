@@ -14,6 +14,8 @@ export const store = new Vuex.Store({
         errors: [],
         currentEvent: {},
         currentEventStudentsList: [],
+        pastMeetings: [],
+        studentsFromPastMeetings: []
     },
     getters,
     mutations,
