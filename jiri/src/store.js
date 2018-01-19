@@ -5,17 +5,20 @@ import {getters} from './getters.js'
 import {mutations} from './mutations.js'
 import {actions} from './actions.js'
 
+import initialState from './initial-state'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        token: '',
-        user: {},
-        errors: [],
-        currentEvent: {},
-        currentEventStudentsList: [],
-        pastMeetings: [],
-        studentsFromPastMeetings: []
+        reader: initialState.reader()
+        // token: '',
+        // user: {},
+        // errors: [],
+        // currentEvent: {},
+        // currentEventStudentsList: [],
+        // pastMeetings: [],
+        // studentsFromPastMeetings: []
     },
     getters,
     mutations,
