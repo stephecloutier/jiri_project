@@ -39,7 +39,6 @@ export const actions = {
 
     // fetches events from api, find the one with the closest exam_date, store its info in the state
     fetchClosestEvent(context) {
-        //console.log(context)
         return new Promise((resolve, reject) => {
             HTTP.get('events/', {
                 headers: {
@@ -74,8 +73,6 @@ export const actions = {
 
     fetchCurrentEventStudentsList(context) {
         return new Promise((resolve, reject) => {
-            //console.log(context.state.token)
-
             HTTP.get('students/', {
                 headers: {
                     'Authorization': 'Token ' + context.state.token
@@ -87,6 +84,51 @@ export const actions = {
                     })
                     context.commit('currentEventStudentsList', currentEventStudents)
                     resolve(true)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    fetchPastMeetings(context) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('meetings/', {
+                headers: {
+                    'Authorization': 'Token ' + context.state.token
+                }
+            })
+                .then((response) => {
+                    //console.log(response)
+                    //console.log(context.state.user.id)
+                    let pastMeetings = response.data.results.filter((meeting) => {
+                        return meeting.user == context.state.user.id
+                    })
+                    //console.log(pastMeetings)
+                    resolve(pastMeetings)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+
+        })
+    },
+
+    startMeeting(context, selectedStudentId) {
+        let data = {
+            user: context.state.user.id,
+            student: selectedStudentId,
+            event: context.state.currentEvent.id,
+        }
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.post('meetings/', data, config )
+                .then((response) => {
+                    resolve(response)
                 })
                 .catch((error) => {
                     reject(error)

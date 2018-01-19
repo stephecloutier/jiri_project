@@ -4,13 +4,24 @@
             Loading...
         </div>
         <div class="main-content" v-else>
-            <h2>Rencontrer un étudiant</h2>
-            <select name="students" v-model="selectedStudentId">
-                <option v-for="student in this.getCurrentEventStudentsList" :key="student.id" :value="student.id" selected>
-                    {{ student.first_name + ' ' + student.last_name }}
-                </option>
-            </select>
-            <input type="submit" value="Débuter la rencontre">
+            <div class="create-meeting">
+                <h2>Rencontrer un étudiant</h2>
+                <select name="students" v-model="selectedStudentId">
+                    <option v-for="student in this.getCurrentEventStudentsList" :key="student.id" :value="student.id" selected>
+                        {{ student.first_name + ' ' + student.last_name }}
+                    </option>
+                </select>
+                <input type="submit" value="Débuter la rencontre" @click.prevent="startMeeting">
+            </div>
+            <!--
+            <div class="past-meetings" v-if="pastMeetings">
+                <h2>Étudiants déjà rencontrés</h2>
+                <ul>
+                    <li v-for="meeting in pastMeetings" :key="meeting.id" @click.prevent="getMeeting">
+                        {{ meeting.student.first_name + meeting.student.last_name }}
+                    </li>
+                </ul>
+            </div>-->
         </div>
 
         <!-- to handle later
@@ -22,6 +33,7 @@
 
 <script>
     import { mapGetters, mapMutations } from 'vuex'
+    import router from '../router'
 
     export default {
         name: 'meetings',
@@ -34,7 +46,8 @@
         computed: {
             ...mapGetters([
                 'getErrors',
-                'getCurrentEventStudentsList'
+                'getCurrentEventStudentsList',
+                'pastMeetings',
             ]),
         },
         created () {
@@ -52,7 +65,12 @@
                             }).catch((error) => {
                                 console.log(error)
                             })
-
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                this.$store.dispatch('fetchPastMeetings')
+                    .then((response) => {
+                        console.log(response)
                     }).catch((error) => {
                         console.log(error)
                     })
@@ -61,39 +79,16 @@
                 this.selectedStudent = $event
                 console.log($event)
             },
+            startMeeting() {
+                this.$store.dispatch('startMeeting', this.selectedStudentId)
+                .then((response) => {
+                    console.log(response)
+                    router.push('meetings/' + response.data.id)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            }
         }
     }
 </script>
-// export default {
-//   data () {
-//     return {
-//       loading: false,
-//       post: null,
-//       error: null
-//     }
-//   },
-//   created () {
-//     // fetch the data when the view is created and the data is
-//     // already being observed
-//     this.fetchData()
-//   },
-//   watch: {
-//     // call again the method if the route changes
-//     '$route': 'fetchData'
-//   },
-//   methods: {
-//     fetchData () {
-//       this.error = this.post = null
-//       this.loading = true
-//       // replace `getPost` with your data fetching util / API wrapper
-//       getPost(this.$route.params.id, (err, post) => {
-//         this.loading = false
-//         if (err) {
-//           this.error = err.toString()
-//         } else {
-//           this.post = post
-//         }
-//       })
-//     }
-//   }
-// }
