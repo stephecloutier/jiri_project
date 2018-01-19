@@ -87,7 +87,7 @@
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
                     .then((response) => {
                         if(response) {
-                            router.push(response.data.id + '/')
+                            router.push('meetings/' + response.data.id + '/')
                         }
                     })
                     .catch((error) => {
@@ -98,7 +98,7 @@
                 let studentMeeting = this.getPastMeetings.find((meeting) => {
                     return meeting.student == id
                 })
-                router.push(studentMeeting.id + '/')
+                router.push('meetings/' + studentMeeting.id + '/')
             }
         }
     }

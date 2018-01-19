@@ -3,7 +3,7 @@
     <header class="header">
       <navigation></navigation>
     </header>
-    <main>
+    <main class="main">
       <router-view/>
     </main>
   </div>
@@ -95,6 +95,7 @@ table {
   color: #2c3e50;
   width: 100%;
   background-color: white;
+  font-size: 16px;
 }
 .header {
   background: linear-gradient(to bottom, #2C003D, #410034);
@@ -103,5 +104,20 @@ table {
   flex-direction: column;
   justify-content: center;
   margin-bottom: 20px;
+}
+.main {
+  margin: 0 auto;
+  text-align: left;
+  max-width: 70%;
+  width: 70%;
+}
+h2 {
+  text-transform: uppercase;
+  font-family: 'Dosis', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  color: #2C003D;
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  margin: 1em 0 0.5em;
 }
 </style>

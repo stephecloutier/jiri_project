@@ -37,6 +37,7 @@
     align-items: center;
     justify-content: space-between;
     width: 70%;
+    max-width: 70%;
     margin: 0 auto;
 }
 [id='svg_logo'] {
