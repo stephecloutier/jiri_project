@@ -24,7 +24,6 @@ router.register(r'performances', views.PerformanceViewSet)
 urlpatterns = [
     path('schema/', schema_view),
     path('', include(router.urls)),
-    #path('authenticate/', rest_framework_views.obtain_auth_token, name='get_auth_token'),
     path('authenticate/', views.CustomObtainAuthToken.as_view(), name='get_auth_token'),
 ]
 

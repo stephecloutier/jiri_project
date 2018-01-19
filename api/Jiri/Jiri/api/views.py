@@ -4,7 +4,7 @@ import datetime
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.decorators import api_view, detail_route
+from rest_framework.decorators import api_view, detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets
@@ -55,6 +55,11 @@ class UserViewSet(viewsets.ModelViewSet):
         user.deleted_at = datetime.datetime.now()
         user.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+    @list_route()
+    def event(self, request):
+        event = User.objects.filter(event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(event, many=True)
+        return Response(serializer.data)
 
 class StudentViewSet(viewsets.ModelViewSet):
     """
@@ -68,6 +73,11 @@ class StudentViewSet(viewsets.ModelViewSet):
         student.deleted_at = datetime.datetime.now()
         student.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+    @list_route()
+    def event(self, request):
+        event = Student.objects.filter(event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(event, many=True)
+        return Response(serializer.data)
 
 class ProjectViewSet(viewsets.ModelViewSet):
     """
@@ -81,6 +91,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
         project.deleted_at = datetime.datetime.now()
         project.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+    @list_route()
+    def event(self, request):
+        event = Project.objects.filter(event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(event, many=True)
+        return Response(serializer.data)
 
 class EventViewSet(viewsets.ModelViewSet):
     """
@@ -109,6 +124,11 @@ class ImplementationViewSet(viewsets.ModelViewSet):
         implementation.deleted_at = datetime.datetime.now()
         implementation.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+    @list_route()
+    def student(self, request):
+        student = Implementation.objects.filter(student__id=request.GET.get('student', None), event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(student, many=True)
+        return Response(serializer.data)
 
 class MeetingViewSet(viewsets.ModelViewSet):
     """
@@ -126,6 +146,13 @@ class MeetingViewSet(viewsets.ModelViewSet):
         meeting.deleted_at = datetime.datetime.now()
         meeting.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+    @list_route()
+    def user(self, request):
+        # pprint('RAWAWRWRRWRWRWRWRAAWWWWRRRRRR')
+        # pprint(request.GET.get('event', None))
+        user = Meeting.objects.filter(user__id=request.user.id, event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(user, many=True)
+        return Response(serializer.data)
 
 class ScoreViewSet(viewsets.ModelViewSet):
     """
@@ -155,3 +182,8 @@ class PerformanceViewSet(viewsets.ModelViewSet):
         performance.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
+    @list_route()
+    def student(self, request):
+        student = Implementation.objects.filter(student__id=request.GET.get('student', None), event__id=request.GET.get('event', None))
+        serializer = self.get_serializer(student, many=True)
+        return Response(serializer.data)
