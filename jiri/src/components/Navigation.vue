@@ -21,7 +21,7 @@
             <path d="M168.2,37.1h-46.8c-1.6,0-2.8,1.3-2.8,2.8s1.3,2.8,2.8,2.8h46.8c1.6,0,2.8-1.3,2.8-2.8S169.8,37.1,168.2,37.1z"/>
         </g>
     </svg>
-    <a href="" @click.prevent="logout" class="logout">Déconnexion</a>
+    <span @click.prevent="logout" class="logout">Déconnexion</span>
 </div>
 </template>
 
@@ -46,5 +46,9 @@
 }
 .logout {
     color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.25rem;
 }
 </style>
