@@ -49,7 +49,6 @@ export default {
     },
     createProject() {
       router.replace({path: '/projects/add'})
-      console.log('createStudent')
     }
   },
   created() {
