@@ -12,7 +12,11 @@ import CreateEvent from '@/components/CreateEvent'
 import CreateStudent from '@/components/CreateStudent'
 import CreateProject from '@/components/CreateProject'
 import CreateUser from '@/components/CreateUser'
-
+import EventInfo from '@/components/EventInfo'
+import EventProjects from '@/components/EventProjects'
+import EventStudents from '@/components/EventStudents'
+import EventUsers from '@/components/EventUsers'
+import EventRecap from '@/components/EventRecap'
 
 
 Vue.use(Router)
@@ -61,8 +65,36 @@ export default new Router({
     },
     {
       path: '/events/add',
-      name: 'create-event',
-      component: CreateEvent
+      component: CreateEvent,
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: '',
+          name: 'event-info',
+          component: EventInfo
+        },
+        {
+          path: 'projects',
+          name: 'event-projects',
+          component: EventProjects
+        },
+        {
+          path: 'students',
+          name: 'event-students',
+          component: EventStudents
+        },
+        {
+          path: 'users',
+          name: 'event-users',
+          component: EventUsers
+        },
+        {
+          path: 'recap',
+          name: 'event-recap',
+          component: EventRecap
+        },
+      ]
     },
     {
       path: '/students/add',

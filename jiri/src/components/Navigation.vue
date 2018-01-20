@@ -28,7 +28,7 @@
     </div>
     <div class="admin-nav" v-if="this.getState.user.is_admin">
         <router-link :to="{name:'dashboard'}" class="admin-nav__link">État du jury</router-link>
-        <router-link :to="{name:'create-event'}" class="admin-nav__link">Créer une nouvelle épreuve</router-link>
+        <router-link :to="{name:'event-info'}" class="admin-nav__link">Créer une nouvelle épreuve</router-link>
         <router-link :to="{name:'events'}" class="admin-nav__link">Voir toutes les épreuves</router-link>
         <router-link :to="{name:'projects'}" class="admin-nav__link">Gérer les travaux</router-link>
         <router-link :to="{name:'students'}" class="admin-nav__link">Gérer les étudiants</router-link>
