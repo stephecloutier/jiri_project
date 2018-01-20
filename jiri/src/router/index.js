@@ -18,15 +18,23 @@ import EventStudents from '@/components/EventStudents'
 import EventUsers from '@/components/EventUsers'
 import EventRecap from '@/components/EventRecap'
 
+import {store} from '../store'
 
 Vue.use(Router)
 
-export default new Router({
+export const router = new Router({
   routes: [
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        if (store.state.token) {
+          next(false)
+        } else if (from.name != 'login') {
+          next()
+        }
+      }
     },
     {
       path: '/meetings',
@@ -41,7 +49,14 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next({ path: '/meetings' })
+        }
+      }
     },
     {
       path: '/students',
@@ -112,4 +127,12 @@ export default new Router({
       component: CreateUser
     },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if(!store.state.token && to.name != 'login') {
+    next({name: 'login'})
+  } else {
+    next()
+  }
 })

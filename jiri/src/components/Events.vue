@@ -14,7 +14,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import router from '../router'
+import {router} from '../router'
 
 
 export default {
