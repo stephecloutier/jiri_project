@@ -10,7 +10,16 @@ import {initialState} from './initial-state'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-    state: initialState(),
+    state: {
+        token: '',
+        user: {},
+        errors: [],
+        currentEvent: {},
+        currentEventStudentsList: [],
+        pastMeetings: [],
+        studentsFromPastMeetings: [],
+        currentMeeting: {},
+    },
     getters,
     mutations,
     actions,

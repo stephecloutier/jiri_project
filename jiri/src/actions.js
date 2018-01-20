@@ -102,7 +102,7 @@ export const actions = {
             })
                 .then((response) => {
                     context.commit('pastMeetings', response.data)
-                    resolve(true)
+                    resolve(response)
                 })
                 .catch((error) => {
                     reject(error)

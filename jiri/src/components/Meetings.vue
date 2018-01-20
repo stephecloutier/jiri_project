@@ -54,7 +54,8 @@
                 'getStudentsFromPastMeetings',
             ]),
         },
-        created () {
+
+        created() {
             this.fetchData()
         },
         methods: {
@@ -69,13 +70,13 @@
                             }).catch((error) => {
                                 console.log(error)
                             })
+                           this.$store.dispatch('fetchPastMeetings')
+                                .then((response) => {
+                                    this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
+                                }).catch((error) => {
+                                    console.log(error)
+                                })
                     }).catch((error) => {
-                        console.log(error)
-                    })
-                this.$store.dispatch('fetchPastMeetings')
-                    .then((response) => {
-                        this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
-                    }).catch((error) => {
                         console.log(error)
                     })
             },
@@ -87,6 +88,7 @@
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
                     .then((response) => {
                         if(response) {
+                            //this.$store.commit('currentMeeting', response.data)
                             router.push('meetings/' + response.data.id + '/')
                         }
                     })
@@ -98,6 +100,10 @@
                 let studentMeeting = this.getPastMeetings.find((meeting) => {
                     return meeting.student == id
                 })
+                let currentMeeting = this.getPastMeetings.find((meeting) => {
+                    return meeting.id = studentMeeting
+                })
+                //this.$store.commit('currentMeeting', currentMeeting)
                 router.push('meetings/' + studentMeeting.id + '/')
             }
         }

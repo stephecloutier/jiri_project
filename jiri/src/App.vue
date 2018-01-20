@@ -28,12 +28,22 @@ export default {
       "setInitialValueOfState"
       ])
   },
-  created() {
-    let stateFromStorage = JSON.parse(localStorage.getItem("datas")) || [];
-    this.setInitialValueOfState(stateFromStorage);
-  },
+  // created() {
+  //   let stateFromStorage = JSON.parse(localStorage.getItem("datas")) || [];
+  //   this.setInitialValueOfState(stateFromStorage);
+  // },
   updated() {
-    localStorage.setItem("datas", JSON.stringify(this.getState));
+    //console.log('app updated')
+    //localStorage.setItem("datas", JSON.stringify(this.getState));
+  },
+  created() {
+    let stateFromStorage = JSON.parse(localStorage.getItem('store')) || []
+    this.setInitialValueOfState(stateFromStorage)
+  },
+  beforeUpdate() {
+    console.log('app before update')
+    localStorage.setItem('store', JSON.stringify(this.getState));
+    //localStorage.setItem("datas", JSON.stringify(this.getState));
   }
 };
 </script>

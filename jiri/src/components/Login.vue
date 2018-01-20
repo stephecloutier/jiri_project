@@ -34,7 +34,7 @@
                         this.currentUser = {email: '', password: ''}
                         this.$store.dispatch('getUserInfo', response.data.id)
                             .then((response) => {
-                                router.push(this.getHomePageUrl)
+                                router.replace(this.getHomePageUrl)
                             }).catch((error) => {
                                 console.log(error)
                             })

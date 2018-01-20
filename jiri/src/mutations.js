@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import router from './router'
-import {initialState} from './initial-state'
+import initialState from './initial-state'
 
 export const mutations = {
     setInitialValueOfState(state, data) {
-        state.token = data.token
-        state.user = data.user,
-        state.errors = data.errors,
-        state.currentEvent = data.currentEvent,
-        state.currentEventStudentsList = data.currentEventStudentsList,
-        state.pastMeetings = data.pastMeetings
-        state.studentsFromPastMeetings = data.studentsFromPastMeetings
-               
+        Object.assign(state, data)
+        // state.token = data.token
+        // state.user = data.user
+        // state.errors = data.errors
+        // state.currentEvent = data.currentEvent
+        // state.currentEventStudentsList = data.currentEventStudentsList
+        // state.pastMeetings = data.pastMeetings
+        // state.studentsFromPastMeetings = data.studentsFromPastMeetings
+        // state.currentMeeting = data.currentMeeting
     },
     saveToken(state, token) {
         state.token = token
@@ -45,25 +46,13 @@ export const mutations = {
     studentsFromPastMeetings(state, data) {
         state.studentsFromPastMeetings = data
     },
+    currentMeeting(state, data) {
+        //state.currentMeeting = data
+    },
+
     clearStoreAndState(state) {
-        //Object.assign(state, initialState())
-        //console.log(state)
-        //localStorage.setItem("datas", JSON.stringify(state))
-        //state = initialState()
-        state.token = ''
-        state.user = {}
-        state.errors = []
-        // state.currentEvent = {}
-        // state.currentEventStudentsList = []
-        // state.pastMeetings = []
-        // state.studentsFromPastMeetings = []
-        // localStorage.setItem('token', state.token)
-        // localStorage.setItem('user', state.user)
-        // localStorage.setItem('errors', state.errors)
-        // localStorage.setItem('currentEvent', state.currentEvent)
-        // localStorage.setItem('currentEventStudentsList', state.currentEventStudentsList)
-        // localStorage.setItem('pastMeetings', state.pastMeetings)
-        // localStorage.setItem('studentsFromPastMeetings', state.studentsFromPastMeetings)
+        Object.assign(state, initialState)
+        localStorage.setItem('store', JSON.stringify(state))
         router.push('/')
     }
 }
