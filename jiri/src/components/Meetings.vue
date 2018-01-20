@@ -28,9 +28,9 @@
         </div>
 
         <!-- To handle later on -->
-        <div class="errors" v-if="getErrors">
+        <!-- <div class="errors" v-if="getErrors">
             <span v-for="error in getErrors" :key="error.index">{{ error }}</span>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -100,9 +100,10 @@
                 let studentMeeting = this.getPastMeetings.find((meeting) => {
                     return meeting.student == id
                 })
-                this.$store.dispatch('changeCurrentMeeting', studentMeeting)
+                this.$store.dispatch('changeCurrentMeeting', studentMeeting.id)
+                this.$store.dispatch('setCurrentStudent', studentMeeting.student)
                 router.push({ path: `/meetings/${studentMeeting.id}` })
-            }
+            },
         }
     }
 </script>

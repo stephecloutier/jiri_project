@@ -147,7 +147,33 @@ export const actions = {
         })
     },
 
-    changeCurrentMeeting(context, data) {
-        context.commit('setCurrentMeeting', data)
+    changeCurrentMeeting(context, id) {
+        context.commit('setCurrentMeeting', id)
+    },
+
+    setCurrentStudent(context, studentId) {
+        let student = context.state.currentEventStudentsList.find((studentItem) => {
+            return studentItem.id == studentId
+        })
+        context.commit('setCurrentStudent', student)
+    },
+
+    fetchStudentImplementations(context, studentId) {
+        let event = context.state.currentEvent.id
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('implementations/student/?student=' + studentId + '&event=' + event, config )
+                .then((response) => {
+                    context.commit('currentStudentImplementations', response.data)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
     }
 }

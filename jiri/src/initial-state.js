@@ -7,5 +7,7 @@ export default {
     pastMeetings: [],
     studentsFromPastMeetings: [],
     currentMeeting: {},
+    currentStudent: {},
+    currentStudentImplementations: [],
 }
   

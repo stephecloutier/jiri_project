@@ -19,6 +19,8 @@ export const store = new Vuex.Store({
         pastMeetings: [],
         studentsFromPastMeetings: [],
         currentMeeting: {},
+        currentStudent: {},
+        currentStudentImplementations: [],
     },
     getters,
     mutations,

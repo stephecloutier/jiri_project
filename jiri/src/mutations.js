@@ -46,14 +46,23 @@ export const mutations = {
     studentsFromPastMeetings(state, data) {
         state.studentsFromPastMeetings = data
     },
-    setCurrentMeeting(state, data) {
-        state.currentMeeting = data
+    setCurrentMeeting(state, id) {
+        let newMeeting = state.pastMeetings.find((meeting) => {
+            return meeting.id == id
+        })
+    },
+    setCurrentStudent(state, data) {
+        state.currentStudent = data
     },
 
     clearStoreAndState(state) {
         Object.assign(state, initialState)
         localStorage.setItem('store', JSON.stringify(state))
         router.push('/')
+    },
+
+    currentStudentImplementations(state, data) {
+        state.currentStudentImplementations = data
     }
 }
 
