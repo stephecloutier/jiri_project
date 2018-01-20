@@ -182,11 +182,3 @@ export const router = new Router({
     },
   ]
 })
-
-router.beforeEach((to, from, next) => {
-  if(!store.state.token && to.name != 'login') {
-    next({name: 'login'})
-  } else {
-    next()
-  }
-})

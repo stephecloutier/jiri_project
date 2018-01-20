@@ -43,6 +43,17 @@
                     })
             }
         },
+        beforeRouteLeave (to, from, next) {
+            if(!this.getUserId && to.name != 'login') {
+                next({name: 'login'})
+            } else {
+                next()
+            }
+            // called when the route that renders this component is about to
+            // be navigated away from.
+            // has access to `this` component instance.
+        }
+
     }
     
 </script>
