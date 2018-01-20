@@ -94,6 +94,24 @@ export const actions = {
         })
     },
 
+    fetchAllEvents(context) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('events/', {
+                headers: {
+                    'Authorization': 'Token ' + context.state.token
+                }
+            })
+                .then((response) => {
+                    context.commit('saveAllEvents', response.data.results)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    },
+
     // fetches events from api, find the one with the closest exam_date, store its info in the state
     fetchClosestEvent(context) {
         return new Promise((resolve, reject) => {

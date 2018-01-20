@@ -26,6 +26,9 @@ export const getters = {
     getUsers(state) {
         return state.users
     },
+    getEvents(state) {
+        return state.events
+    },
     getCurrentEvent(state) {
         return state.currentEvent
     },

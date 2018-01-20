@@ -5,6 +5,7 @@ export default {
     students: [],
     projects: [],
     users: [],
+    events: [],
     currentEvent: {},
     currentEventStudentsList: [],
     pastMeetings: [],

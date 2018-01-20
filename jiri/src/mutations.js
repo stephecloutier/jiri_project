@@ -43,6 +43,9 @@ export const mutations = {
     saveAllUsers(state, data) {
         state.users = data
     },
+    saveAllEvents(state, data) {
+        state.events = data
+    },
     saveCurrentEvent(state, data) {
         state.currentEvent = data
     },
