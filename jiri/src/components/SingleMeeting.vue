@@ -46,6 +46,13 @@
         },
         created() {
             this.fetchData()
+        },
+        beforeRouteLeave (to, from, next) {
+            if(to.meta.admin) {
+                next(false)
+            } else {
+                next()
+            }
         }
     }
 </script>

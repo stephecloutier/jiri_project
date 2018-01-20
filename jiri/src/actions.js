@@ -164,7 +164,6 @@ export const actions = {
     },
 
     fetchPastMeetings(context) {
-        //console.log(context.state.currentEvent)
         return new Promise((resolve, reject) => {
             HTTP.get('meetings/user/?event=' + context.state.currentEvent.id, {
                 headers: {

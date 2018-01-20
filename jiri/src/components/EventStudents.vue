@@ -1,9 +1,17 @@
 <template>
-  <h2>Ajout d'étudiants</h2>
+<div>
+    <h2>Ajout d'étudiants</h2>
+    <a @click.prevent="next">Suite</a>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'event-students'
+  name: 'event-students',
+  methods: {
+    next() {
+      router.push({path: '/events/add/users'})
+    }
+  }
 }
 </script>

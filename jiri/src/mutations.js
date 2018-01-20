@@ -5,14 +5,6 @@ import initialState from './initial-state'
 export const mutations = {
     setInitialValueOfState(state, data) {
         Object.assign(state, data)
-        // state.token = data.token
-        // state.user = data.user
-        // state.errors = data.errors
-        // state.currentEvent = data.currentEvent
-        // state.currentEventStudentsList = data.currentEventStudentsList
-        // state.pastMeetings = data.pastMeetings
-        // state.studentsFromPastMeetings = data.studentsFromPastMeetings
-        // state.currentMeeting = data.currentMeeting
     },
     saveToken(state, token) {
         state.token = token

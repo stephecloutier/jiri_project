@@ -50,61 +50,31 @@ export const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/students',
       name: 'students',
       component: Students,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/projects',
       name: 'projects',
       component: Projects,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/users',
       name: 'users',
       component: Users,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/events',
       name: 'events',
       component: Events,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/events/add',
@@ -113,72 +83,53 @@ export const router = new Router({
         {
           path: '',
           name: 'event-info',
-          component: EventInfo
+          component: EventInfo,
+          meta: { admin: true }
         },
         {
           path: 'projects',
           name: 'event-projects',
-          component: EventProjects
+          component: EventProjects,
+          meta: { admin: true }
         },
         {
           path: 'students',
           name: 'event-students',
-          component: EventStudents
+          component: EventStudents,
+          meta: { admin: true }
         },
         {
           path: 'users',
           name: 'event-users',
-          component: EventUsers
+          component: EventUsers,
+          meta: { admin: true }
         },
         {
           path: 'recap',
           name: 'event-recap',
-          component: EventRecap
+          component: EventRecap,
+          meta: { admin: true }
         },
       ],
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/students/add',
       name: 'create-student',
       component: CreateStudent,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/projects/add',
       name: 'create-project',
       component: CreateProject,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
     {
       path: '/users/add',
       name: 'create-user',
       component: CreateUser,
-      beforeEnter: (to, from, next) => {
-        if(store.state.user.is_admin) {
-          next()
-        } else {
-          next(false)
-        }
-      }
+      meta: { admin: true }
     },
   ]
 })

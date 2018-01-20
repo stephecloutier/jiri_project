@@ -105,6 +105,13 @@
                 this.$store.dispatch('setCurrentStudent', studentMeeting.student)
                 router.push({ path: `/meetings/${studentMeeting.id}` })
             },
+        },
+        beforeRouteLeave (to, from, next) {
+            if(to.meta.admin) {
+                next(false)
+            } else {
+                next()
+            }
         }
     }
 </script>

@@ -13,15 +13,19 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import router from '../router'
+import {router} from '../router'
 
 export default {
   name: 'create-event',
   data() {
       return {
           event: {
-              title: '',
-              description: '',
+              course_name: '',
+              exam_session: undefined,
+              exam_data: undefined,
+              projects: {},
+              students: {},
+              users: {},
           }
       }
   },
