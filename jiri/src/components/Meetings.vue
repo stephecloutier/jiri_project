@@ -89,6 +89,7 @@
                     .then((response) => {
                         if(response) {
                             this.$store.dispatch('changeCurrentMeeting', response.data)
+                            this.$store.dispatch('setCurrentStudent', this.selectedStudentId)
                             router.push({ path: `/meetings/${response.data.id}` })
                         }
                     })
