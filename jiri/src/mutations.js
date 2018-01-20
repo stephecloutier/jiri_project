@@ -37,6 +37,9 @@ export const mutations = {
     saveAllStudents(state, data) {
         state.students = data
     },
+    saveAllProjects(state, data) {
+        state.projects = data
+    },
     saveCurrentEvent(state, data) {
         state.currentEvent = data
     },

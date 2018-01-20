@@ -20,6 +20,9 @@ export const getters = {
     getStudents(state) {
         return state.students
     },
+    getProjects(state) {
+        return state.projects
+    },
     getCurrentEvent(state) {
         return state.currentEvent
     },
