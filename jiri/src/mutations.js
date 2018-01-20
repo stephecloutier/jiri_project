@@ -34,6 +34,9 @@ export const mutations = {
     saveErrors(state, data) {
         state.errors = data.non_field_errors
     },
+    saveAllStudents(state, data) {
+        state.students = data
+    },
     saveCurrentEvent(state, data) {
         state.currentEvent = data
     },

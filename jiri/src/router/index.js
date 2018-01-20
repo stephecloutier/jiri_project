@@ -9,7 +9,7 @@ import Projects from '@/components/Projects'
 import Users from '@/components/Users'
 import Events from '@/components/Events'
 import CreateEvent from '@/components/CreateEvent'
-
+import CreateStudent from '@/components/CreateStudent'
 
 Vue.use(Router)
 
@@ -59,6 +59,11 @@ export default new Router({
       path: '/events/create',
       name: 'create-event',
       component: CreateEvent
+    },
+    {
+      path: '/students/add',
+      name: 'create-student',
+      component: CreateStudent
     },
   ]
 })
