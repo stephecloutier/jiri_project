@@ -60,7 +60,7 @@ export default new Router({
       component: Events
     },
     {
-      path: '/events/create',
+      path: '/events/add',
       name: 'create-event',
       component: CreateEvent
     },
