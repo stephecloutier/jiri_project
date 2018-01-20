@@ -33,7 +33,6 @@ export default {
     this.setInitialValueOfState(stateFromStorage)
   },
   beforeUpdate() {
-    console.log('app before update')
     localStorage.setItem('store', JSON.stringify(this.getState));
   }
 };

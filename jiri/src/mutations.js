@@ -46,8 +46,8 @@ export const mutations = {
     studentsFromPastMeetings(state, data) {
         state.studentsFromPastMeetings = data
     },
-    currentMeeting(state, data) {
-        //state.currentMeeting = data
+    setCurrentMeeting(state, data) {
+        state.currentMeeting = data
     },
 
     clearStoreAndState(state) {

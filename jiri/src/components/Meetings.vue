@@ -88,8 +88,8 @@
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
                     .then((response) => {
                         if(response) {
-                            //this.$store.commit('currentMeeting', response.data)
-                            router.push('meetings/' + response.data.id + '/')
+                            this.$store.dispatch('changeCurrentMeeting', response.data)
+                            router.push({path: response.data.id + '/'})
                         }
                     })
                     .catch((error) => {
@@ -100,11 +100,8 @@
                 let studentMeeting = this.getPastMeetings.find((meeting) => {
                     return meeting.student == id
                 })
-                let currentMeeting = this.getPastMeetings.find((meeting) => {
-                    return meeting.id = studentMeeting
-                })
-                //this.$store.commit('currentMeeting', currentMeeting)
-                router.push('meetings/' + studentMeeting.id + '/')
+                this.$store.dispatch('changeCurrentMeeting', studentMeeting)
+                router.push({ path: studentMeeting.id + '/'})
             }
         }
     }

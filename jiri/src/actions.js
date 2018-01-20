@@ -146,4 +146,8 @@ export const actions = {
                 })
         })
     },
+
+    changeCurrentMeeting(context, data) {
+        context.commit('setCurrentMeeting', data)
+    }
 }
