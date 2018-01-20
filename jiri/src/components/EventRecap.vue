@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import {router} from '../router'
+
 export default {
   name: 'event-recap',
   methods: {
