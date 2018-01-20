@@ -23,6 +23,9 @@ export const getters = {
     getProjects(state) {
         return state.projects
     },
+    getUsers(state) {
+        return state.users
+    },
     getCurrentEvent(state) {
         return state.currentEvent
     },

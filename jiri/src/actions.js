@@ -76,6 +76,24 @@ export const actions = {
         })
     },
 
+    fetchAllUsers(context) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('users/', {
+                headers: {
+                    'Authorization': 'Token ' + context.state.token
+                }
+            })
+                .then((response) => {
+                    context.commit('saveAllUsers', response.data.results)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    },
+
     // fetches events from api, find the one with the closest exam_date, store its info in the state
     fetchClosestEvent(context) {
         return new Promise((resolve, reject) => {
@@ -255,5 +273,30 @@ export const actions = {
                     reject(error)
                 })
         })
-    }
+    },
+
+    createUser(context, data) {
+        let user = {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            username: data.email,
+            password: data.password,
+            is_admin: data.is_admin,
+        }
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.post('users/', user, config )
+                .then((response) => {
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    },
 }
