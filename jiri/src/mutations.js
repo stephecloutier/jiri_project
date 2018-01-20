@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import router from './router'
-import initialState from './initial-state'
+import {initialState} from './initial-state'
 
 export const mutations = {
     setInitialValueOfState(state, data) {
@@ -46,13 +46,24 @@ export const mutations = {
         state.studentsFromPastMeetings = data
     },
     clearStoreAndState(state) {
-        // const initial = state
-        // Object.keys(initial).forEach(key => {state[key] = initial[key]})
-        //state = initialState.reader()
-        //state = {}
-        //localStorage.clear()
-        Object.assign(state, initialState.reader())
+        //Object.assign(state, initialState())
+        //console.log(state)
         //localStorage.setItem("datas", JSON.stringify(state))
+        //state = initialState()
+        state.token = ''
+        state.user = {}
+        state.errors = []
+        // state.currentEvent = {}
+        // state.currentEventStudentsList = []
+        // state.pastMeetings = []
+        // state.studentsFromPastMeetings = []
+        // localStorage.setItem('token', state.token)
+        // localStorage.setItem('user', state.user)
+        // localStorage.setItem('errors', state.errors)
+        // localStorage.setItem('currentEvent', state.currentEvent)
+        // localStorage.setItem('currentEventStudentsList', state.currentEventStudentsList)
+        // localStorage.setItem('pastMeetings', state.pastMeetings)
+        // localStorage.setItem('studentsFromPastMeetings', state.studentsFromPastMeetings)
         router.push('/')
     }
 }
