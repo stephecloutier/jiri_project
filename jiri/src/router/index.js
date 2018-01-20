@@ -111,8 +111,6 @@ export const router = new Router({
       component: CreateEvent,
       children: [
         {
-          // UserProfile will be rendered inside User's <router-view>
-          // when /user/:id/profile is matched
           path: '',
           name: 'event-info',
           component: EventInfo
