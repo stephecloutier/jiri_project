@@ -7,7 +7,7 @@
           <router-link to="/events/add/users">Jurés</router-link>
           <router-link to="/events/add/recap">Récapitulatif</router-link>
         </p>
-        <router-view></router-view>
+        <router-view v-bind:event="this.event" @update="onUpdate"></router-view>
     </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
           event: {
               course_name: '',
               exam_session: undefined,
-              exam_data: undefined,
+              exam_date: undefined,
               projects: {},
               students: {},
               users: {},
@@ -30,6 +30,12 @@ export default {
       }
   },
   methods: {
+    onUpdate(data) {
+      this.event.course_name = data.course_name
+      this.event.exam_session = data.exam_session
+      this.event.exam_date = data.exam_date
+      //this.event = {...this.event, data.course_name}
+    }
       // createProject() {
       //   this.$store.dispatch('createProject', this.project)
       //       .then((response) => {
