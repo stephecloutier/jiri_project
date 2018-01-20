@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Bravo tu es connecté, administrateur !</h1>
+        <h2>État du jury</h2>
     </div>
 </template>
 
