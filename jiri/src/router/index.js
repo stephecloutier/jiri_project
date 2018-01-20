@@ -54,29 +54,57 @@ export const router = new Router({
         if(store.state.user.is_admin) {
           next()
         } else {
-          next({ path: '/meetings' })
+          next(false)
         }
       }
     },
     {
       path: '/students',
       name: 'students',
-      component: Students
+      component: Students,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/projects',
       name: 'projects',
-      component: Projects
+      component: Projects,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/users',
       name: 'users',
-      component: Users
+      component: Users,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/events',
       name: 'events',
-      component: Events
+      component: Events,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/events/add',
@@ -109,22 +137,50 @@ export const router = new Router({
           name: 'event-recap',
           component: EventRecap
         },
-      ]
+      ],
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/students/add',
       name: 'create-student',
-      component: CreateStudent
+      component: CreateStudent,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/projects/add',
       name: 'create-project',
-      component: CreateProject
+      component: CreateProject,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: '/users/add',
       name: 'create-user',
-      component: CreateUser
+      component: CreateUser,
+      beforeEnter: (to, from, next) => {
+        if(store.state.user.is_admin) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
   ]
 })
