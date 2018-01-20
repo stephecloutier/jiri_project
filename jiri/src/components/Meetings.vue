@@ -89,7 +89,7 @@
                     .then((response) => {
                         if(response) {
                             this.$store.dispatch('changeCurrentMeeting', response.data)
-                            router.push({path: response.data.id + '/'})
+                            router.push({ path: `/meetings/${response.data.id}` })
                         }
                     })
                     .catch((error) => {
@@ -101,7 +101,7 @@
                     return meeting.student == id
                 })
                 this.$store.dispatch('changeCurrentMeeting', studentMeeting)
-                router.push({ path: studentMeeting.id + '/'})
+                router.push({ path: `/meetings/${studentMeeting.id}` })
             }
         }
     }
