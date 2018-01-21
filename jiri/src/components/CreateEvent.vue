@@ -23,18 +23,18 @@ export default {
               course_name: '',
               exam_session: undefined,
               exam_date: undefined,
-              projects: {},
-              students: {},
-              users: {},
+              projects: [],
+              students: [],
+              users: [],
           }
       }
   },
   methods: {
     onUpdate(data) {
-      this.event.course_name = data.course_name
-      this.event.exam_session = data.exam_session
-      this.event.exam_date = data.exam_date
-      //this.event = {...this.event, data.course_name}
+      if(data.course_name) this.event.course_name = data.course_name
+      if(data.exam_session) this.event.exam_session = data.exam_session
+      if(data.exam_date) this.event.exam_date = data.exam_date
+      if(data.project) this.event.projects = data.projectsId
     }
       // createProject() {
       //   this.$store.dispatch('createProject', this.project)
