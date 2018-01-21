@@ -46,6 +46,14 @@ export default {
       //           console.log(error)
       //       })
       //   }
+  },
+  beforeRouteLeave (to, from , next) {
+    const answer = window.confirm('Voulez-vous vraiment quitter la création de l\'épreuve?')
+    if (answer) {
+      next()
+    } else {
+      next(false)
+    }
   }
 }
 </script>
