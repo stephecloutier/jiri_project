@@ -196,10 +196,6 @@ export const actions = {
     },
 
     startMeeting(context, selectedStudentId) {
-        if(context.state.pastMeetings.find((meeting) => meeting.student == selectedStudentId)) {
-            context.commit('saveErrors', 'Vous avez déjà rencontré l\'étudiant sélectionné')
-            return false;
-        }
         let data = {
             user: context.state.user.id,
             student: selectedStudentId,

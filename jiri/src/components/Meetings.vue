@@ -81,6 +81,8 @@
                         this.$store.dispatch('fetchCurrentEventStudentsList', response.id)
                             .then((response) => {
                                 this.loading = false
+                                this.selectedEventId = this.getCurrentEvent.id
+                                this.selectedStudentId = this.getCurrentEventStudentsList[0].id
                             }).catch((error) => {
                                 console.log(error)
                             })
@@ -107,6 +109,7 @@
                 this.$store.dispatch('fetchCurrentEventStudentsList', newEvent.id)
                     .then((response) => {
                         this.loading = false
+                        this.selectedStudentId = this.getCurrentEventStudentsList[0].id
                     }).catch((error) => {
                         console.log(error)
                     })
@@ -125,13 +128,15 @@
                     console.log('Vous devez sélectionner un étudiant!')
                     return
                 }
+                if(this.getPastMeetings.find((meeting) => meeting.student == this.selectedStudentId)) {
+                    console.log('Vous avez déjà rencontré l\'étudiant sélectionné')
+                    return
+                }
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
                     .then((response) => {
-                        if(response) {
-                            this.$store.dispatch('changeCurrentMeeting', response.data)
-                            this.$store.dispatch('setCurrentStudent', this.selectedStudentId)
-                            router.push({ path: `/meetings/${response.data.id}` })
-                        }
+                        this.$store.dispatch('changeCurrentMeeting', response.data)
+                        this.$store.dispatch('setCurrentStudent', this.selectedStudentId)
+                        router.push({ path: `/meetings/${response.data.id}` })
                     })
                     .catch((error) => {
                         console.log(error)
