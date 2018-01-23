@@ -47,10 +47,3 @@ export default {
 }
 </script>
 
-<style>
-sup {
-  vertical-align: super;
-  font-size: smaller;
-}
-</style>
-

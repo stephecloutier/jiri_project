@@ -120,4 +120,16 @@ h2 {
   font-size: 1.5rem;
   margin: 1em 0 0.5em;
 }
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+.h2-like {
+  font-family: 'Dosis', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  color: #2C003D;
+  letter-spacing: 1px;
+  font-size: 1.25rem;
+  margin: 0;
+}
 </style>

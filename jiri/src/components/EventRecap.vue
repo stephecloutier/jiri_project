@@ -155,13 +155,6 @@ export default {
   .error-redirect:hover {
     color: darkred
   }
-  .h2-like {
-    font-family: 'Dosis', Helvetica, Arial, sans-serif;
-    font-weight: 600;
-    color: #2C003D;
-    letter-spacing: 1px;
-    font-size: 1.25rem;
-    margin: 0;
-  }
+
 
 </style>
