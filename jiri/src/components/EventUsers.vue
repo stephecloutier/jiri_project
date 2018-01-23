@@ -10,7 +10,7 @@
               {{ user.first_name }} {{ user.last_name }}
             </option>
           </select>
-          <input type="submit" @click.prevent="addSelectedUser" value="Ajouter le projet">
+          <input type="submit" @click.prevent="addSelectedUser" value="Ajouter le juré">
 
           <h2>Jurés déjà ajoutés</h2>
           <div v-if="this.users == false">

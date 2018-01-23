@@ -10,7 +10,7 @@
         {{ project.name }}
       </option>
     </select>
-    <input type="submit" @click.prevent="addSelectedProject" value="Ajouter le projet">
+    <input type="submit" @click.prevent="addSelectedProject" value="Ajouter le travail">
 
     <h2>Travaux déjà ajoutés</h2>
     <div v-if="this.projects == false">
@@ -66,7 +66,7 @@ export default {
     },
     addSelectedProject() {
       if(this.info.projectsId.find((project) => project == this.selectedProjectId)) {
-        console.log('Le projet a déjà été ajouté')
+        console.log('Le travail a déjà été ajouté')
       } else {
         this.info.projectsId.push(this.selectedProjectId)
         let selectedProject = this.getProjects.find((project) => {
