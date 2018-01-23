@@ -30,6 +30,7 @@
                 'getCurrentMeeting',
                 'getCurrentStudent',
                 'getCurrentStudentImplementations',
+                'getState',
             ]),
         },
         methods: {
@@ -48,7 +49,7 @@
             this.fetchData()
         },
         beforeRouteLeave (to, from, next) {
-            if(to.meta.admin) {
+            if(to.meta.admin && !this.getState.user.is_admin) {
                 next(false)
             } else {
                 next()
