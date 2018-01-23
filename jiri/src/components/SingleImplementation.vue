@@ -1,5 +1,6 @@
 <template>
     <div>
+        <a @click.prevent="navigate('meetings/' + getCurrentMeeting.id)">Retour</a>
         <h2>Rencontre avec {{ this.getCurrentStudent.first_name + ' ' + this.getCurrentStudent.last_name }}</h2>
         <div class="project-infos">
             <span class="h2-like">{{ this.project.name }}</span>
@@ -99,7 +100,10 @@ export default {
             }).catch((error) => {
                 console.log(error)
             })
-      }
+      },
+       navigate(path) {
+            router.push({path: '/' + path})
+        }
   },
   created() {
       this.setProjectInfo()
