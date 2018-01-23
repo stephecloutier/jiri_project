@@ -30,7 +30,27 @@
                     </option>
                 </select>
                 <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
-                [dashboard]
+                <div v-if="this.dashboardLoading"> 
+                    Loading...
+                </div>
+                <div v-else>
+                    <table class="dashboard">
+                        <tr>
+                            <th>Étudiants v - Jurés ></th>
+                            <th v-for="user in users" :key="user.id">
+                                {{ user.first_name + ' ' + user.last_name }}
+                            </th>
+                        </tr>
+                        <tr v-for="student in students" :key="student.id">
+                            <th>
+                                {{ student.first_name + ' ' + student.last_name }}
+                            </th>
+                            <td v-for="user in users" :key="user.id">
+                                {{ getScore(user.id, student.id) }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +68,9 @@
                 todayEvent: false,
                 selectedEventId: undefined,
                 loading: false,
+                dashboardLoading: false,
+                users: [],
+                students: [],
             }
         },
         computed: {
@@ -56,11 +79,18 @@
                 'getCurrentEvent',
                 'getErrors',
                 'getState',
+                'getCurrentMeetings',
+                'getUsers',
+                'getStudents',
+                'getProjects',
+                'getImplementations',
+                'getScores',
             ]),
         },
         methods: {
             init() {
                 this.loading = true
+                this.dashboardLoading = true
                 this.$store.dispatch('fetchAllEvents')
                     .then((response) => {
                         if(response.data == false) {
@@ -71,9 +101,9 @@
                         this.$store.dispatch('fetchClosestEvent')
                             .then((response) => {
                                 this.loading = false
-                                console.log(response)
+                                this.getDashboard(response.data.id)
                             }).catch((error) => {
-                                console.log(error)
+                                //console.log(error)
                         })
 
                 }).catch((error) => {
@@ -98,7 +128,73 @@
             },
             getDashboard(eventId) {
                 this.loading = false
-                console.log(eventId)
+                this.$store.dispatch('getCurrentMeetings', eventId)
+                    .then((response) => {
+                        this.fetchData()
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            },
+            fetchData() {
+                this.$store.dispatch('fetchAllUsers')
+                    .then((response) => {
+                        this.$store.dispatch('fetchAllStudents')
+                            .then((response) => {
+                                this.fillUsersAndStudents()
+                                this.$store.dispatch('fetchAllProjects')
+                                    .then((response) => {
+                                        this.$store.dispatch('fetchAllImplementations')
+                                            .then((response) => {
+                                                this.$store.dispatch('fetchAllScores')
+                                                    .then((response) => {
+                                                        this.dashboardLoading = false
+                                                    }).catch((error) => {
+                                                        console.log(error)
+                                                    })
+                                            }).catch((error) => {
+                                                console.log(error)
+                                            })
+                                    }).catch((error) => {
+                                        console.log(error)
+                                    })
+                            }).catch((error) => {
+                                console.log(error)
+                            })
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            },
+             fillUsersAndStudents() {
+                this.getCurrentEvent.users.forEach((eventUser) => {
+                    this.users.push(this.getUsers.find((user) => {
+                        return user.id == eventUser
+                    }))
+                })
+                this.getCurrentEvent.students.forEach((eventStudent) => {
+                    this.students.push(this.getStudents.find((student) => {
+                        return student.id == eventStudent
+                    }))
+                })
+            },
+            getScore(userId, studentId) {
+                let meeting = this.findMeeting(userId, studentId)
+                if(!meeting) return
+                let globalEval = this.getProjects.find((project) => {
+                    return project.is_default
+                })
+                let implementation = this.getImplementations.find((implementation) => {
+                    return implementation.event == this.getCurrentEvent.id && implementation.student == studentId && implementation.project == globalEval.id
+                })
+                let score = this.getScores.find((score) => {
+                    return score.meeting == meeting.id && score.implementation == implementation.id
+                })
+                return score.score
+                
+            },
+            findMeeting(userId, studentId) {
+                return this.getCurrentMeetings.find((meeting) => {
+                    return meeting.student == studentId && meeting.user == userId
+                })
             }
         },
         created () {
@@ -106,3 +202,14 @@
         },
     }
 </script>
+
+<style>
+.dashboard {
+    border-collapse: collapse;
+}
+.dashboard tr, .dashboard th, .dashboard td {
+    padding: 1em;
+    border: 2px solid black;
+}
+
+</style>

@@ -77,6 +77,18 @@ export const mutations = {
 
     saveCurrentScore(state, data) {
         state.currentScore = data
+    },
+
+    saveCurrentMeetings(state, data) {
+        state.currentMeetings = data
+    },
+
+    saveAllImplementations(state, data) {
+        state.implementations = data
+    },
+
+    saveAllScores(state, data) {
+        state.scores = data
     }
 }
 

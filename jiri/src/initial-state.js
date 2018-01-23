@@ -15,5 +15,8 @@ export default {
     currentStudentImplementations: [],
     currentImplementation: {},
     currentScore: {},
+    currentMeetings: [],
+    implementations: [],
+    scores: [],
 }
   

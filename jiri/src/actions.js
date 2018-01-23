@@ -436,5 +436,59 @@ export const actions = {
                     reject(error)
                 })
         })
-    }
+    },
+
+    getCurrentMeetings(context, data) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('meetings/event/?event=' + data,  config )
+                .then((response) => {
+                    context.commit('saveCurrentMeetings', response.data)
+                    resolve(response.data)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    fetchAllImplementations(context) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('implementations/',  config )
+                .then((response) => {
+                    context.commit('saveAllImplementations', response.data)
+                    resolve(response.data)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    fetchAllScores(context) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('scores/',  config )
+                .then((response) => {
+                    context.commit('saveAllScores', response.data)
+                    resolve(response.data)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
 }

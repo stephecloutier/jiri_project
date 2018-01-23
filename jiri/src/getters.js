@@ -44,6 +44,9 @@ export const getters = {
     getCurrentMeeting(state) {
         return state.currentMeeting
     },
+    getCurrentMeetings(state) {
+        return state.currentMeetings
+    },
     getCurrentStudent(state) {
         return state.currentStudent
     },
@@ -56,4 +59,10 @@ export const getters = {
     getCurrentScore(state) {
         return state.currentScore
     },
+    getImplementations(state) {
+        return state.implementations
+    },
+    getScores(state) {
+        return state.scores
+    }
 }

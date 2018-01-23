@@ -177,6 +177,12 @@ class MeetingViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(user, many=True)
         return Response(serializer.data)
 
+    @list_route()
+    def event(self, request):
+        event = Meeting.objects.filter(event__id=request.query_params.get('event', None))
+        serializer = self.get_serializer(event, many=True)
+        return Response(serializer.data)
+
 class ScoreViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides 'list', 'create', 'retrieve', 'update' and 'destroy' actions.
