@@ -74,6 +74,7 @@
         },
         methods: {
             fetchData() {
+                this.$store.dispatch('fetchAllEvents')
                 this.loading = true
                 this.$store.dispatch('fetchClosestEvent')
                     .then((response) => {
