@@ -67,7 +67,11 @@ export const mutations = {
 
     currentStudentImplementations(state, data) {
         state.currentStudentImplementations = data
-    }
+    },
+
+    changeCurrentEvent(state, data) {
+        state.currentEvent = data
+    },
 }
 
 

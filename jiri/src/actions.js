@@ -146,6 +146,10 @@ export const actions = {
         })
     },
 
+    changeCurrentEvent(context, event) {
+        context.commit('changeCurrentEvent', event)
+    },
+
     fetchCurrentEventStudentsList(context, eventId) {
         return new Promise((resolve, reject) => {
             HTTP.get('students/event/?event=' + eventId, {

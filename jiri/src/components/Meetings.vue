@@ -4,6 +4,16 @@
             Loading...
         </div>
         <div class="main-content" v-else>
+            <div>
+                <span class="h2-like">{{ this.getCurrentEvent.course_name + ' - ' + this.getCurrentEvent.exam_date }}</span>
+                <br>
+                <select id="event" v-model="selectedEventId">
+                    <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
+                        {{ event.course_name + ' - ' + event.exam_date }}
+                    </option>
+                </select>
+                <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
+            </div>
             <div class="create-meeting">
                 <h2>Rencontrer un étudiant</h2>
                 <select name="students" v-model="selectedStudentId">
@@ -44,10 +54,13 @@
             return {
                 loading: false,
                 selectedStudentId: null,
+                selectedEventId: undefined,
             }
         },
         computed: {
             ...mapGetters([
+                'getEvents',
+                'getCurrentEvent',
                 'getErrors',
                 'getCurrentEventStudentsList',
                 'getPastMeetings',
@@ -66,7 +79,6 @@
                     .then((response) => {
                         this.$store.dispatch('fetchCurrentEventStudentsList', response.id)
                             .then((response) => {
-                                this.selectedStudentId = this.getCurrentEventStudentsList[0].id
                                 this.loading = false
                             }).catch((error) => {
                                 console.log(error)
@@ -81,9 +93,27 @@
                         console.log(error)
                     })
             },
+            changeCurrentEvent() {
+                this.loading = true
+                let newEvent = this.getEvents.find((event) => {
+                    return event.id == this.selectedEventId
+                })
+                this.$store.dispatch('changeCurrentEvent', newEvent)
+                this.$store.dispatch('fetchCurrentEventStudentsList', newEvent.id)
+                    .then((response) => {
+                        this.loading = false
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                this.$store.dispatch('fetchPastMeetings')
+                    .then((response) => {
+                        this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            },
             changeSelectedStudent($event) {
                 this.selectedStudent = $event
-                console.log($event)
             },
             startMeeting() {
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
