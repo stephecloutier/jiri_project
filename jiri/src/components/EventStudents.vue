@@ -13,14 +13,14 @@
     <input type="submit" @click.prevent="addSelectedStudent" value="Ajouter l'étudiant">
 
     <h2>Étudiants déjà ajoutés</h2>
-    <ul v-if="this.students != []">
+    <div v-if="this.students == false">
+      Vous n'avez pas encore ajouté d'étudiants
+    </div>
+    <ul v-else>
       <li v-for="student in this.students" :key="student.id" @click.prevent="updateStudent(student.id)">
         {{ student.first_name }} {{ student.last_name }}
       </li>
     </ul>
-    <div v-else>
-      Vous n'avez pas encore ajouté d'étudiants
-    </div>
   </div>
   <a @click.prevent="next">Suite</a>
 </div>

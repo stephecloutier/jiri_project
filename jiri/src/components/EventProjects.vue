@@ -13,14 +13,14 @@
     <input type="submit" @click.prevent="addSelectedProject" value="Ajouter le projet">
 
     <h2>Travaux déjà ajoutés</h2>
-    <ul v-if="this.projects != []">
+    <div v-if="this.projects == false">
+      Vous n'avez pas encore ajouté de travaux
+    </div>
+    <ul v-else>
       <li v-for="project in this.projects" :key="project.id" @click.prevent="updateProject(project.id)">
         {{ project.name }}
       </li>
     </ul>
-    <div v-else>
-      Vous n'avez pas encore ajouté de travaux
-    </div>
   </div>
   
   <a @click.prevent="next">Suite</a>
