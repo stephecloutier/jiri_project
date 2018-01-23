@@ -3,6 +3,11 @@
         <div class="loading" v-if="loading">
             Loading...
         </div>
+        <div v-else-if="this.loadingErrors != false">
+            <p v-for="error in this.loadingErrors" :key="error.index">
+                {{ error }}
+            </p>
+        </div>
         <div class="main-content" v-else>
             <div>
                 <span class="h2-like">{{ this.getCurrentEvent.course_name + ' - ' + this.getCurrentEvent.exam_date }}</span>
@@ -55,6 +60,7 @@
                 loading: false,
                 selectedStudentId: null,
                 selectedEventId: undefined,
+                loadingErrors: [],
             }
         },
         computed: {
@@ -74,26 +80,33 @@
         },
         methods: {
             fetchData() {
-                this.$store.dispatch('fetchAllEvents')
                 this.loading = true
-                this.$store.dispatch('fetchClosestEvent')
+                this.$store.dispatch('fetchAllEvents')
                     .then((response) => {
-                        this.$store.dispatch('fetchCurrentEventStudentsList', response.id)
+                        if(response.data == false) {
+                            this.loading = false
+                            this.loadingErrors.push('Il n\'y a aucune épreuve de prévue.')
+                            return
+                        }
+                        this.$store.dispatch('fetchClosestEvent')
                             .then((response) => {
-                                this.loading = false
-                                this.selectedEventId = this.getCurrentEvent.id
-                                this.selectedStudentId = this.getCurrentEventStudentsList[0].id
-                            }).catch((error) => {
+                                this.$store.dispatch('fetchCurrentEventStudentsList', response.id)
+                                    .then((response) => {
+                                        this.loading = false
+                                        this.selectedEventId = this.getCurrentEvent.id
+                                        this.selectedStudentId = this.getCurrentEventStudentsList[0].id
+                                    }).catch((error) => {
+                                        console.log(error)
+                                    })
+                                this.$store.dispatch('fetchPastMeetings')
+                                        .then((response) => {
+                                            this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
+                                        }).catch((error) => {
+                                            console.log(error)
+                                        })
+                            }).catch((error) => {
                                 console.log(error)
                             })
-                           this.$store.dispatch('fetchPastMeetings')
-                                .then((response) => {
-                                    this.$store.dispatch('getStudentsFromPastMeetings', this.getPastMeetings)
-                                }).catch((error) => {
-                                    console.log(error)
-                                })
-                    }).catch((error) => {
-                        console.log(error)
                     })
             },
             changeCurrentEvent() {
