@@ -38,6 +38,7 @@
                 this.loading = true
                 this.$store.dispatch('fetchStudentImplementations', this.getCurrentStudent.id)
                     .then((response) => {
+                        console.log(response)
                         this.loading = false
                     })
                     .catch((error) => {

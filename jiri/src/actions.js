@@ -337,7 +337,27 @@ export const actions = {
                     resolve(response)
                 })
                 .catch((error) => {
-                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    },
+    createImplementations(context, data) {
+        let implementations = {
+            implementations: data
+        }
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+            contentType: 'application/json'
+        }
+        console.log(implementations)
+        return new Promise((resolve, reject) => {
+            HTTP.post('implementations/addAll/', implementations, config )
+                .then((response) => {
+                    resolve(response)
+                })
+                .catch((error) => {
                     reject(error)
                 })
         })

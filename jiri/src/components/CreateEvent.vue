@@ -29,6 +29,7 @@ export default {
               isBeingCreated: false,
           },
           isEventCreated: false,
+          implementations: [],
       }
   },
   methods: {
@@ -40,13 +41,29 @@ export default {
     },
     createEvent() {
       this.event.isBeingCreated = true,
+
       this.$store.dispatch('createEvent', this.event)
           .then((response) => {
-              this.isEventCreated = true,
-              router.push({path: '/events'})
+            console.log(this.event.projects)
+            this.addImplementations(response.data.id)
+            this.$store.dispatch('createImplementations', this.implementations)
+              .then((response) => {
+                console.log(response)
+                this.isEventCreated = true,
+                router.push({path: '/events'})
+              }).catch((error) => {
+                console.log(error)
+              })
           }).catch((error) => {
               console.log(error)
           })
+      },
+      addImplementations(eventId) {
+        this.event.students.forEach((student) => {
+          this.event.projects.forEach((project) => {
+            this.implementations.push({ student: student, project: project, event: eventId })
+          })
+        })
       }
   },
   beforeRouteLeave (to, from , next) {
