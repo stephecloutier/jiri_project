@@ -7,7 +7,7 @@
           <router-link to="/events/add/users">Jurés</router-link>
           <router-link to="/events/add/recap">Récapitulatif</router-link>
         </p>
-        <router-view v-bind:event="this.event" @update="onUpdate"></router-view>
+        <router-view v-bind:event="this.event" @update="onUpdate" @save="createEvent"></router-view>
     </div>
 </template>
 
@@ -35,17 +35,18 @@ export default {
       if(data.exam_session) this.event.exam_session = data.exam_session
       if(data.exam_date) this.event.exam_date = data.exam_date
       if(data.project) this.event.projects = data.projectsId
-    }
-      // createProject() {
-      //   this.$store.dispatch('createProject', this.project)
-      //       .then((response) => {
-      //           console.log(response)
-      //           this.project = {title: '', description: '', weight: undefined}
-      //           router.push({path: '/projects'})
-      //       }).catch((error) => {
-      //           console.log(error)
-      //       })
-      //   }
+    },
+    createEvent() {
+      console.log('create event')
+      // this.$store.dispatch('createEvent', this.event)
+      //     .then((response) => {
+      //         console.log(response)
+      //         this.project = {title: '', description: '', weight: undefined}
+      //         router.push({path: '/projects'})
+      //     }).catch((error) => {
+      //         console.log(error)
+      //     })
+      }
   },
   beforeRouteLeave (to, from , next) {
     const answer = window.confirm('Voulez-vous vraiment quitter la création de l\'épreuve?')

@@ -104,7 +104,8 @@ export default {
       console.log('saving')
       if(!this.recap.course_name || !this.recap.exam_session || !this.recap.exam_date || this.recap.students == false || this.recap.projects == false || this.recap.users == false) {
         this.validationErrors = true
-        return
+      } else {
+        this.$emit('save')
       }
     },
     navigate(path) {
