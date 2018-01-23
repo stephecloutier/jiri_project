@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex-column">
         <p>
           <router-link to="/events/add/">Informations</router-link>
           <router-link to="/events/add/projects">Travaux</router-link>

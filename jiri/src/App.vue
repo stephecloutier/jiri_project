@@ -87,6 +87,25 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+@font-face {
+  font-family: "Dosis";
+  src: url('./assets/dosis/Dosis-Regular.otf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Dosis";
+  src: url('./assets/dosis/Dosis-Bold.otf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Dosis";
+  src: url('./assets/dosis/Dosis-SemiBold.otf');
+  font-weight: 500;
+}
+
 #app {
   font-family: "Dosis", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -131,7 +150,7 @@ sup {
   letter-spacing: 1px;
   font-size: 1.25rem;
   margin: 0 0 1em 0;
-  display: inline-block;
+  display: block;
 }
 
 .button {
@@ -157,6 +176,40 @@ li {
   font-weight: 500;
   background-color: #FBFAFB;
   cursor: pointer;
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="date"] {
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: "Dosis", Helvetica, arial, sans-serif;
+  font-size: 18px;
+}
+label {
+  display: block;
+  margin: 1em 0 0.5em;
+  color: #2C003D;
+  font-family: "Dosis", Helvetica, arial, sans-serif;
+  font-weight: 600;
+}
+
+.inline-label {
+  display: inline-block;
+}
+
+.back {
+  cursor: pointer;
+  color: #2C003D;
+  font-weight: 600;
+}
+
+.event-selection {
+  margin: 2rem 0;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 </style>

@@ -9,7 +9,7 @@
             </p>
         </div>
         <div class="main-content" v-else>
-            <div>
+            <div class="event-selection">
                 <span class="h2-like">{{ this.getCurrentEvent.course_name + ' - ' + this.getCurrentEvent.exam_date }}</span>
                 <br>
                 <select id="event" v-model="selectedEventId">

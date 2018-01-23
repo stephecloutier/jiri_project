@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="dashboard-wrapper">
         <div v-if="this.loading">
             Loading...
         </div>
@@ -15,21 +15,26 @@
                 <p class="h2-like">Créez une épreuve ou sélectionnez-en une dans la liste</p>
                 <a class="button button-dashboard"  @click.prevent="navigate('events/add')">Créer une épreuve</a>
                 <br>
-                <select id="event" v-model="selectedEventId">
-                    <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
-                        {{ event.course_name + ' - ' + event.exam_date }}
-                    </option>
-                </select>
-                <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
+                <div class="event-selection">
+                    <select id="event" v-model="selectedEventId">
+                        <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
+                            {{ event.course_name + ' - ' + event.exam_date }}
+                        </option>
+                    </select>
+                    <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
+                </div>
             </div>
             <div v-else>
                 <h2>État du jury {{ this.getCurrentEvent.course_name + ' - ' + this.getCurrentEvent.exam_date }}</h2>
-                <select id="event" v-model="selectedEventId">
-                    <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
-                        {{ event.course_name + ' - ' + event.exam_date }}
-                    </option>
-                </select>
-                <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
+                <div class="event-selection">
+                    <select id="event" v-model="selectedEventId">
+                        <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
+                            {{ event.course_name + ' - ' + event.exam_date }}
+                        </option>
+                    </select>
+                    <input type="submit" @click.prevent="changeCurrentEvent" value="Changer d'épreuve">
+                </div>
+
                 <div v-if="this.dashboardLoading"> 
                     Loading...
                 </div>
@@ -213,5 +218,12 @@
 .dashboard tr, .dashboard th, .dashboard td {
     padding: 1em;
     border: 2px solid black;
+}
+
+.dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 </style>

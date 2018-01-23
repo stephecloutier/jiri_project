@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex-column">
         <input type="email" v-model="currentUser.email" @keyup.enter="login">
         <input type="password" v-model="currentUser.password" @keyup.enter="login">
         <input class="button" type="submit" value="Se connecter" v-on:click="login">
@@ -57,5 +57,4 @@
     }
     
 </script>
-
 

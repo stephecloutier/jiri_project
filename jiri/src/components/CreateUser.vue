@@ -15,7 +15,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" id="password" @keyup.enter="createUser" v-model="newUser.password">
             <br>
-            <label for="is_admin">Administrateur</label>
+            <label class="inline-label" for="is_admin">Administrateur</label>
             <input type="checkbox" id="is_admin" v-model="newUser.is_admin">
             <br>
             <input class="button" type="submit" value="Ajouter le juré" @click.prevent="createUser">
