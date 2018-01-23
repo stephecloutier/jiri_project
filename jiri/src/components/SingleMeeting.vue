@@ -70,7 +70,12 @@
             }
         },
         created() {
-            this.fetchData()
+            this.$store.dispatch('fetchAllProjects')
+                .then((response) => {
+                    this.fetchData()
+                }).catch((error) => {
+                    console.log(error)
+                })
         },
         beforeRouteLeave (to, from, next) {
             if(to.meta.admin && !this.getState.user.is_admin) {
