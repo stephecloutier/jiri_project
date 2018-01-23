@@ -106,7 +106,7 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
+    pprint(Event.objects.all())
     def destroy(self, request, pk):
         event = Event.objects.get(id=pk)
         event.deleted_at = datetime.datetime.now()

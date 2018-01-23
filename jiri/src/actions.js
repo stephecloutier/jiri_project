@@ -48,7 +48,7 @@ export const actions = {
                 }
             })
                 .then((response) => {
-                    context.commit('saveAllStudents', response.data.results)
+                    context.commit('saveAllStudents', response.data)
                     resolve(response)
                 })
                 .catch((error) => {
@@ -66,7 +66,7 @@ export const actions = {
                 }
             })
                 .then((response) => {
-                    context.commit('saveAllProjects', response.data.results)
+                    context.commit('saveAllProjects', response.data)
                     resolve(response)
                 })
                 .catch((error) => {
@@ -84,7 +84,7 @@ export const actions = {
                 }
             })
                 .then((response) => {
-                    context.commit('saveAllUsers', response.data.results)
+                    context.commit('saveAllUsers', response.data)
                     resolve(response)
                 })
                 .catch((error) => {
@@ -102,7 +102,7 @@ export const actions = {
                 }
             })
                 .then((response) => {
-                    context.commit('saveAllEvents', response.data.results)
+                    context.commit('saveAllEvents', response.data)
                     resolve(response)
                 })
                 .catch((error) => {
@@ -125,7 +125,7 @@ export const actions = {
                     let currentDate = Date.now()
                     let eventDate = {index: undefined, difference: undefined}
 
-                    response.data.results.forEach((event, index) => {
+                    response.data.forEach((event, index) => {
                         let date = new Date(event.exam_date)
                         let difference = Math.abs(currentDate - date)
   
@@ -135,8 +135,8 @@ export const actions = {
                             if(eventDate.difference == 0) return true
                         } 
                     });
-                    context.commit('saveCurrentEvent', response.data.results[eventDate.index])
-                    resolve(response.data.results[eventDate.index])
+                    context.commit('saveCurrentEvent', response.data[eventDate.index])
+                    resolve(response.data[eventDate.index])
                 })
                 .catch((error) => {
                     console.log(error)

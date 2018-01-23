@@ -44,7 +44,6 @@ export default {
 
       this.$store.dispatch('createEvent', this.event)
           .then((response) => {
-            console.log(this.event.projects)
             this.addImplementations(response.data.id)
             this.$store.dispatch('createImplementations', this.implementations)
               .then((response) => {
