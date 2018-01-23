@@ -316,4 +316,30 @@ export const actions = {
                 })
         })
     },
+
+    createEvent(context, data) {
+        let event = {
+            course_name: data.course_name,
+            exam_session: data.exam_session,
+            exam_date: data.exam_date,
+            projects: data.projects,
+            students: data.students,
+            users: data.users,
+        }
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.post('events/', event, config )
+                .then((response) => {
+                    resolve(response)
+                })
+                .catch((error) => {
+                    context.commit('saveErrors', error.response.data)
+                    reject(error)
+                })
+        })
+    }
 }

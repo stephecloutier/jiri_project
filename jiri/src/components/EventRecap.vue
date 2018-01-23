@@ -55,6 +55,7 @@
         Vous devez corriger les erreurs avant d'enregistrer l'épreuve
       </div>
       <a @click.prevent="save">Enregistrer</a>
+      <span v-if="this.isBeingCreated">Épreuve en création</span>
   </div>
 </template>
 
@@ -79,6 +80,7 @@ export default {
           students: [],
           users: [],
           validationErrors: false,
+          isBeingCreated: this.event.isBeingCreated,
       }
   },
   computed: {
@@ -101,7 +103,6 @@ export default {
       })
     },
     save() {
-      console.log('saving')
       if(!this.recap.course_name || !this.recap.exam_session || !this.recap.exam_date || this.recap.students == false || this.recap.projects == false || this.recap.users == false) {
         this.validationErrors = true
       } else {

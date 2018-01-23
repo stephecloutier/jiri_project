@@ -26,7 +26,9 @@ export default {
               projects: [],
               students: [],
               users: [],
-          }
+              isBeingCreated: false,
+          },
+          isEventCreated: false,
       }
   },
   methods: {
@@ -37,24 +39,28 @@ export default {
       if(data.project) this.event.projects = data.projectsId
     },
     createEvent() {
-      console.log('create event')
-      // this.$store.dispatch('createEvent', this.event)
-      //     .then((response) => {
-      //         console.log(response)
-      //         this.project = {title: '', description: '', weight: undefined}
-      //         router.push({path: '/projects'})
-      //     }).catch((error) => {
-      //         console.log(error)
-      //     })
+      this.event.isBeingCreated = true,
+      this.$store.dispatch('createEvent', this.event)
+          .then((response) => {
+              this.isEventCreated = true,
+              router.push({path: '/events'})
+          }).catch((error) => {
+              console.log(error)
+          })
       }
   },
   beforeRouteLeave (to, from , next) {
-    const answer = window.confirm('Voulez-vous vraiment quitter la création de l\'épreuve?')
-    if (answer) {
+    if(this.isEventCreated) {
       next()
     } else {
-      next(false)
+      const answer = window.confirm('Voulez-vous vraiment quitter la création de l\'épreuve?')
+        if (answer) {
+          next()
+        } else {
+          next(false)
+        }
     }
+    
   }
 }
 </script>
