@@ -6,7 +6,7 @@
   </div>
   <div v-else>
     <select v-model="selectedProjectId">
-      <option v-for="project in this.getProjects" :key="project.id" :value="project.id">
+      <option v-for="project in this.remainingProjects" :key="project.id" :value="project.id">
         {{ project.name }}
       </option>
     </select>
@@ -39,6 +39,7 @@ export default {
       loading: true,
       selectedProjectId: undefined,
       projects: [],
+      remainingProjects: [],
       info: {
         projectsId: this.event.projects,
       },
@@ -58,6 +59,7 @@ export default {
       this.$store.dispatch('fetchAllProjects')
         .then((response) => {
           this.loading = false
+          this.selectedProjectId = this.remainingProjects[0].id
         })
         .catch((error) => {
           console.log(error)
@@ -76,6 +78,15 @@ export default {
           return project.id == this.selectedProjectId
         })
         this.projects.push(selectedProject)
+        let projectIndex = this.remainingProjects.findIndex((project) => {
+          return project.id == selectedProject.id
+        })
+        this.remainingProjects.splice(projectIndex, 1)
+        if(this.remainingProjects != false) {
+          this.selectedProjectId = this.remainingProjects[0].id
+        } else {
+          this.selectedProjectId = undefined
+        }
       }
     },
     updateProject() {
@@ -88,6 +99,7 @@ export default {
           return this.info.projectsId.includes(project.id) 
     })
     this.projects = selectedProjects
+    this.remainingProjects = this.getProjects
   },
   updated() {
     this.$emit('update', this.info)

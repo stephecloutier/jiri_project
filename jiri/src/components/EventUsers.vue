@@ -6,7 +6,7 @@
         </div>
         <div v-else>
           <select v-model="selectedUserId">
-            <option v-for="user in this.getUsers" :key="user.id" :value="user.id">
+            <option v-for="user in this.remainingUsers" :key="user.id" :value="user.id">
               {{ user.first_name }} {{ user.last_name }}
             </option>
           </select>
@@ -41,6 +41,7 @@ export default {
       info: {
         usersId: this.event.users,
       },
+      remainingUsers: [],
     }
   },
   computed: {
@@ -57,6 +58,7 @@ export default {
       this.$store.dispatch('fetchAllUsers')
         .then((response) => {
           this.loading = false
+          this.selectedUserId = this.remainingUsers[0].id
         })
         .catch((error) => {
           console.log(error)
@@ -71,10 +73,21 @@ export default {
         console.log('Le juré a déjà été ajouté')
       } else {
         this.info.usersId.push(this.selectedUserId)
+
         let selectedUser = this.getUsers.find((user) => {
           return user.id == this.selectedUserId
         })
         this.users.push(selectedUser)
+
+        let userIndex = this.remainingUsers.findIndex((user) => {
+          return user.id == selectedUser.id
+        })
+        this.remainingUsers.splice(userIndex, 1)
+        if(this.remainingUsers != false) {
+          this.selectedUserId = this.remainingUsers[0].id
+        } else {
+          this.selectedUserId = undefined
+        }
       }
     },
     updateUser() {
@@ -87,6 +100,7 @@ export default {
           return this.info.usersId.includes(user.id) 
     })
     this.users = selectedUsers
+    this.remainingUsers = this.getUsers
   },
   updated() {
     this.$emit('update', this.info)

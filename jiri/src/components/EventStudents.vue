@@ -6,7 +6,7 @@
   </div>
   <div v-else>
     <select v-model="selectedStudentId">
-      <option v-for="student in this.getStudents" :key="student.id" :value="student.id">
+      <option v-for="student in this.remainingStudents" :key="student.id" :value="student.id">
         {{ student.first_name }} {{ student.last_name }}
       </option>
     </select>
@@ -38,6 +38,7 @@ export default {
       loading: true,
       selectedStudentId: undefined,
       students: [],
+      remainingStudents: [],
       info: {
         studentsId: this.event.students,
       },
@@ -57,6 +58,7 @@ export default {
       this.$store.dispatch('fetchAllStudents')
         .then((response) => {
           this.loading = false
+          this.selectedStudentId = this.remainingStudents[0].id
         })
         .catch((error) => {
           console.log(error)
@@ -75,6 +77,15 @@ export default {
           return student.id == this.selectedStudentId
         })
         this.students.push(selectedStudent)
+        let studentIndex = this.remainingStudents.findIndex((student) => {
+          return student.id == selectedStudent.id
+        })
+        this.remainingStudents.splice(studentIndex, 1)
+        if(this.remainingStudents != false) {
+          this.selectedStudentId = this.remainingStudents[0].id
+        } else {
+          this.selectedStudentId = undefined
+        }
       }
     },
     updateStudent() {
@@ -87,6 +98,7 @@ export default {
           return this.info.studentsId.includes(student.id) 
     })
     this.students = selectedStudents
+    this.remainingStudents = this.getStudents
   },
   updated() {
     this.$emit('update', this.info)
