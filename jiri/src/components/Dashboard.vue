@@ -115,7 +115,7 @@
             },
             changeCurrentEvent() {
                 if(this.selectedEventId == undefined) {
-                    console.log('Vous devez sélectionner un évènement!')
+                    console.log('Vous devez sélectionner une épreuve!')
                     return
                 }
                 this.loading = true
@@ -188,6 +188,9 @@
                 let score = this.getScores.find((score) => {
                     return score.meeting == meeting.id && score.implementation == implementation.id
                 })
+                if(!score) {
+                    return
+                }
                 return score.score
                 
             },
