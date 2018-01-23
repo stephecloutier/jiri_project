@@ -6,8 +6,8 @@
   </div>
   <div v-else>
     <select v-model="selectedProjectId">
-      <option v-for="project in this.remainingProjects" :key="project.id" :value="project.id">
-        {{ project.name }}
+      <option v-for="project in this.remainingProjects" :key="project.id" :value="project.id" v-if="!project.is_default">
+          {{ project.name }}
       </option>
     </select>
     <input type="submit" @click.prevent="addSelectedProject" value="Ajouter le travail">

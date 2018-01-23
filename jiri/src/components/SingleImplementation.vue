@@ -95,7 +95,6 @@ export default {
           }
           this.$store.dispatch('saveScore', scoreInfos)
             .then((response) => {
-                console.log(response)
                 router.push({path: `/meetings/${this.getCurrentMeeting.id}`})
             }).catch((error) => {
                 console.log(error)

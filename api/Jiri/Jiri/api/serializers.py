@@ -55,7 +55,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     deleted_at = serializers.CharField(read_only=True)
     class Meta:
         model = Project
-        fields = ('id', 'name', 'description', 'default_weight', 'deleted_at')
+        fields = ('id', 'name', 'description', 'default_weight', 'is_default', 'deleted_at')
 
 class EventSerializer(serializers.ModelSerializer):
     projects = serializers.PrimaryKeyRelatedField(many=True, queryset=Project.objects.all())

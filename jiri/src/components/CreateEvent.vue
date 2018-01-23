@@ -32,6 +32,11 @@ export default {
           implementations: [],
       }
   },
+  computed: {
+    ...mapGetters([
+      'getProjects'
+    ])
+  },
   methods: {
     onUpdate(data) {
       if(data.course_name) this.event.course_name = data.course_name
@@ -40,8 +45,13 @@ export default {
       if(data.project) this.event.projects = data.projectsId
     },
     createEvent() {
-      this.event.isBeingCreated = true,
-
+      this.event.isBeingCreated = true
+      let defaultProjects = this.getProjects.filter((project) => {
+        return project.is_default
+      })
+      defaultProjects.forEach((project) => {
+        this.event.projects.push(project.id)
+      })
       this.$store.dispatch('createEvent', this.event)
           .then((response) => {
             this.addImplementations(response.data.id)

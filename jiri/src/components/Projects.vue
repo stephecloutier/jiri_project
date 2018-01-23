@@ -5,11 +5,8 @@
       Loading...
     </div>
     <ul v-else>
-      <li v-for="project in this.getProjects" :key="project.id" @click.prevent="updateProject(project.id)">
+      <li v-for="project in this.getProjects" :key="project.id" @click.prevent="updateProject(project.id)" v-if="!project.is_default">
         {{ project.name }}
-        <!-- <div v-if="this.deploy">
-          <img :src="student.profile_pic" alt="">
-        </div> -->
       </li>
     </ul>
     <a @click.prevent="createProject">Créer un travail</a>
