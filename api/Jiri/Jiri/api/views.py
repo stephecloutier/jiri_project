@@ -1,5 +1,7 @@
 from pprint import pprint
 import datetime
+import json
+# import io
 
 from rest_framework import generics
 from rest_framework import permissions
@@ -57,7 +59,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
     @list_route()
     def event(self, request):
-        event = User.objects.filter(event__id=request.GET.get('event', None))
+        event = User.objects.filter(event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(event, many=True)
         return Response(serializer.data)
 
@@ -75,7 +77,7 @@ class StudentViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
     @list_route()
     def event(self, request):
-        event = Student.objects.filter(event__id=request.GET.get('event', None))
+        event = Student.objects.filter(event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(event, many=True)
         return Response(serializer.data)
 
@@ -93,7 +95,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
     @list_route()
     def event(self, request):
-        event = Project.objects.filter(event__id=request.GET.get('event', None))
+        event = Project.objects.filter(event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(event, many=True)
         return Response(serializer.data)
 
@@ -126,9 +128,24 @@ class ImplementationViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
     @list_route()
     def student(self, request):
-        student = Implementation.objects.filter(student__id=request.GET.get('student', None), event__id=request.GET.get('event', None))
+        student = Implementation.objects.filter(student__id=request.query_params.get('student', None), event__id=request.GET.get('event', None))
         serializer = self.get_serializer(student, many=True)
         return Response(serializer.data)
+    @list_route(methods=['post'])
+    def addAll(self, request):
+        implementations = request.data['implementations']
+        pprint(implementations)
+        if request.method == 'POST' and implementations:
+            for implementation in implementations:
+                serializer = ImplementationSerializer(data=implementation)
+                if serializer.is_valid():
+                    serializer.save()
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(implementations, status=status.HTTP_201_CREATED)
+ 
+
+        
 
 class MeetingViewSet(viewsets.ModelViewSet):
     """
@@ -150,7 +167,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
     def user(self, request):
         # pprint('RAWAWRWRRWRWRWRWRAAWWWWRRRRRR')
         # pprint(request.GET.get('event', None))
-        user = Meeting.objects.filter(user__id=request.user.id, event__id=request.GET.get('event', None))
+        user = Meeting.objects.filter(user__id=request.user.id, event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(user, many=True)
         return Response(serializer.data)
 
@@ -184,6 +201,6 @@ class PerformanceViewSet(viewsets.ModelViewSet):
 
     @list_route()
     def student(self, request):
-        student = Implementation.objects.filter(student__id=request.GET.get('student', None), event__id=request.GET.get('event', None))
+        student = Implementation.objects.filter(student__id=request.query_params.get('student', None), event__id=request.GET.get('event', None))
         serializer = self.get_serializer(student, many=True)
         return Response(serializer.data)
