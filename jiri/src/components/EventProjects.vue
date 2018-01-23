@@ -58,13 +58,16 @@ export default {
       this.$store.dispatch('fetchAllProjects')
         .then((response) => {
           this.loading = false
-          this.selectedProjectId = this.getProjects[0].id
         })
         .catch((error) => {
           console.log(error)
         })
     },
     addSelectedProject() {
+      if(this.selectedProjectId == undefined) {
+        console.log('Vous devez sélectionner un projet!')
+        return
+      }
       if(this.info.projectsId.find((project) => project == this.selectedProjectId)) {
         console.log('Le travail a déjà été ajouté')
       } else {

@@ -57,13 +57,16 @@ export default {
       this.$store.dispatch('fetchAllUsers')
         .then((response) => {
           this.loading = false
-          this.selectedUserId = this.getUsers[0].id
         })
         .catch((error) => {
           console.log(error)
         })
     },
     addSelectedUser() {
+      if(this.selectedUserId == undefined) {
+        console.log('Vous devez sélectionner un juré!')
+        return
+      }
       if(this.info.usersId.find((user) => user == this.selectedUserId)) {
         console.log('Le juré a déjà été ajouté')
       } else {

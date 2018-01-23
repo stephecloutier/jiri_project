@@ -95,6 +95,10 @@
                     })
             },
             changeCurrentEvent() {
+                if(this.selectedEventId == undefined) {
+                    console.log('Vous devez sélectionner un évènement!')
+                    return
+                }
                 this.loading = true
                 let newEvent = this.getEvents.find((event) => {
                     return event.id == this.selectedEventId
@@ -117,6 +121,10 @@
                 this.selectedStudent = $event
             },
             startMeeting() {
+                if(this.selectedStudentId == undefined) {
+                    console.log('Vous devez sélectionner un étudiant!')
+                    return
+                }
                 this.$store.dispatch('startMeeting', this.selectedStudentId)
                     .then((response) => {
                         if(response) {

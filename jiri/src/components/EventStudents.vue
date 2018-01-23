@@ -57,13 +57,16 @@ export default {
       this.$store.dispatch('fetchAllStudents')
         .then((response) => {
           this.loading = false
-          this.selectedStudentId = this.getStudents[0].id
         })
         .catch((error) => {
           console.log(error)
         })
     },
     addSelectedStudent() {
+      if(this.selectedStudentId == undefined) {
+        console.log('Vous devez sélectionner un étudiant!')
+        return
+      }
       if(this.info.studentsId.find((student) => student == this.selectedStudentId)) {
         console.log('L\'étudiant a déjà été ajouté')
       } else {
