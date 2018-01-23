@@ -24,7 +24,7 @@
                 </g>
             </svg>
         </a>
-        <span @click.prevent="logout" class="logout">Déconnexion</span>
+        <span @click.prevent="logout" class="logout" v-if="this.getState.token">Déconnexion</span>
     </div>
     <div class="admin-nav" v-if="this.getState.user.is_admin">
         <router-link :to="{name:'dashboard'}" class="admin-nav__link">État du jury</router-link>
