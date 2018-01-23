@@ -50,10 +50,8 @@ export const mutations = {
     studentsFromPastMeetings(state, data) {
         state.studentsFromPastMeetings = data
     },
-    setCurrentMeeting(state, id) {
-        let newMeeting = state.pastMeetings.find((meeting) => {
-            return meeting.id == id
-        })
+    setCurrentMeeting(state, data) {
+        state.currentMeeting = data
     },
     setCurrentStudent(state, data) {
         state.currentStudent = data
@@ -69,9 +67,17 @@ export const mutations = {
         state.currentStudentImplementations = data
     },
 
+    currentImplementation(state, data) {
+        state.currentImplementation = data
+    },
+
     changeCurrentEvent(state, data) {
         state.currentEvent = data
     },
+
+    saveCurrentScore(state, data) {
+        state.currentScore = data
+    }
 }
 
 

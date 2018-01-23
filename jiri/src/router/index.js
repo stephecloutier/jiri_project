@@ -17,6 +17,8 @@ import EventProjects from '@/components/EventProjects'
 import EventStudents from '@/components/EventStudents'
 import EventUsers from '@/components/EventUsers'
 import EventRecap from '@/components/EventRecap'
+import SingleImplementation from '@/components/SingleImplementation'
+
 
 import {store} from '../store'
 
@@ -45,6 +47,11 @@ export const router = new Router({
       path: '/meetings/:id',
       name: 'single-meeting',
       component: SingleMeeting
+    },
+    {
+      path: '/meetings/:meetingId/:id',
+      name: 'single-implementation',
+      component: SingleImplementation
     },
     {
       path: '/dashboard',

@@ -217,8 +217,8 @@ export const actions = {
         })
     },
 
-    changeCurrentMeeting(context, id) {
-        context.commit('setCurrentMeeting', id)
+    changeCurrentMeeting(context, data) {
+        context.commit('setCurrentMeeting', data)
     },
 
     setCurrentStudent(context, studentId) {
@@ -239,6 +239,24 @@ export const actions = {
             HTTP.get('implementations/student/?student=' + studentId + '&event=' + event, config )
                 .then((response) => {
                     context.commit('currentStudentImplementations', response.data)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    fetchSingleImplementation(context, data) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('implementations/project/?student=' + data.student + '&event=' + data.event + '&project=' + data.project, config )
+                .then((response) => {
+                    context.commit('currentImplementation', response.data)
                     resolve(response)
                 })
                 .catch((error) => {
@@ -351,11 +369,68 @@ export const actions = {
             },
             contentType: 'application/json'
         }
-        console.log(implementations)
         return new Promise((resolve, reject) => {
             HTTP.post('implementations/addAll/', implementations, config )
                 .then((response) => {
                     resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    saveScore(context, data) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.post('scores/', data, config )
+                .then((response) => {
+                    context.commit('saveCurrentScore', response.data)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    updateScore(context, data) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.put('scores/' + context.state.currentScore.id + '/', data, config )
+                .then((response) => {
+                    context.commit('saveCurrentScore', response.data)
+                    resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    },
+
+    getCurrentScore(context, data) {
+        let config = {
+            headers: {
+                'Authorization': 'Token ' + context.state.token,
+            },
+        }
+        return new Promise((resolve, reject) => {
+            HTTP.get('scores/single/?meeting=' + data.meeting + '&implementation=' + data.implementation,  config )
+                .then((response) => {
+                    if(!response.data) {
+                        resolve(false)
+                        return
+                    }
+                    context.commit('saveCurrentScore', response.data)
+                    resolve(response.data)
                 })
                 .catch((error) => {
                     reject(error)

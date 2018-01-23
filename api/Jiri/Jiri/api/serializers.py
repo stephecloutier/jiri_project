@@ -35,6 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
 
         if validation_errors:
             raise serializers.ValidationError(validation_errors)
+
+        instance.save()
         return instance
         
     class Meta:
@@ -91,6 +93,7 @@ class ScoreSerializer(serializers.ModelSerializer):
         if instance.score > 20 or instance.score < 0:
             raise serializers.ValidationError('Le score doit être compris entre 0 et 20 inclus.')      
         instance.comment = validated_data.get('comment', instance.comment)
+        instance.save()
         return instance
     class Meta:
         model = Score
@@ -110,7 +113,7 @@ class PerformanceSerializer(serializers.ModelSerializer):
         instance.final_score = validated_data.get('final_score', instance.final_score)
         if instance.final_score > 20 and instance.final_score < 0:
             raise serializers.ValidationError('Le score doit être compris entre 0 et 20 inclus.')
-        
+        instance.save()
         return instance
             
     class Meta:

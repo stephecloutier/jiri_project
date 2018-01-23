@@ -126,11 +126,19 @@ class ImplementationViewSet(viewsets.ModelViewSet):
         implementation.deleted_at = datetime.datetime.now()
         implementation.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+
     @list_route()
     def student(self, request):
-        student = Implementation.objects.filter(student__id=request.query_params.get('student', None), event__id=request.GET.get('event', None))
+        student = Implementation.objects.filter(student__id=request.query_params.get('student', None), event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(student, many=True)
         return Response(serializer.data)
+
+    @list_route()
+    def project(self, request):
+        project = Implementation.objects.get(student__id=request.query_params.get('student', None), project__id=request.query_params.get('project', None), event__id=request.query_params.get('event', None))
+        serializer = self.get_serializer(project, many=False)
+        return Response(serializer.data)
+
     @list_route(methods=['post'])
     def addAll(self, request):
         implementations = request.data['implementations']
@@ -165,8 +173,6 @@ class MeetingViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
     @list_route()
     def user(self, request):
-        # pprint('RAWAWRWRRWRWRWRWRAAWWWWRRRRRR')
-        # pprint(request.GET.get('event', None))
         user = Meeting.objects.filter(user__id=request.user.id, event__id=request.query_params.get('event', None))
         serializer = self.get_serializer(user, many=True)
         return Response(serializer.data)
@@ -184,6 +190,12 @@ class ScoreViewSet(viewsets.ModelViewSet):
         score.deleted_at = datetime.datetime.now()
         score.save()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+
+    @list_route()
+    def single(self, request):
+        single = Score.objects.get(meeting__id=request.query_params.get('meeting', None), implementation__id=request.query_params.get('implementation', None))
+        serializer = self.get_serializer(single, many=False)
+        return Response(serializer.data)
 
 class PerformanceViewSet(viewsets.ModelViewSet):
     """

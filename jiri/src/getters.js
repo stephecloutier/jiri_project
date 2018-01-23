@@ -49,5 +49,11 @@ export const getters = {
     },
     getCurrentStudentImplementations(state) {
         return state.currentStudentImplementations
-    }
+    },
+    getCurrentImplementation(state) {
+        return state.currentImplementation
+    },
+    getCurrentScore(state) {
+        return state.currentScore
+    },
 }

@@ -25,6 +25,8 @@ export const store = new Vuex.Store({
         currentMeeting: {},
         currentStudent: {},
         currentStudentImplementations: [],
+        currentImplementation: {},
+        currentScore: {},
     },
     getters,
     mutations,

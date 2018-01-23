@@ -159,7 +159,7 @@
                 let studentMeeting = this.getPastMeetings.find((meeting) => {
                     return meeting.student == id
                 })
-                this.$store.dispatch('changeCurrentMeeting', studentMeeting.id)
+                this.$store.dispatch('changeCurrentMeeting', studentMeeting)
                 this.$store.dispatch('setCurrentStudent', studentMeeting.student)
                 router.push({ path: `/meetings/${studentMeeting.id}` })
             },
