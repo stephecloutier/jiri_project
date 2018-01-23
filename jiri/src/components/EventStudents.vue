@@ -22,7 +22,7 @@
       </li>
     </ul>
   </div>
-  <a @click.prevent="next">Suite</a>
+  <a  class="button" @click.prevent="next">Suite</a>
 </div>
 </template>
 

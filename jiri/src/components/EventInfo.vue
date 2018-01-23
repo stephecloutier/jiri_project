@@ -15,7 +15,7 @@
     <label for="2">2<sup>e</sup> session</label>
     <br>
 
-    <a @click.prevent="next">Suite</a>
+    <a class="button" @click.prevent="next">Suite</a>
   </div>
 </template>
 

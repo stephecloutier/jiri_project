@@ -10,7 +10,7 @@
           {{ project.name }}
       </option>
     </select>
-    <input type="submit" @click.prevent="addSelectedProject" value="Ajouter le travail">
+    <input  type="submit" @click.prevent="addSelectedProject" value="Ajouter le travail">
 
     <h2>Travaux déjà ajoutés</h2>
     <div v-if="this.projects == false">
@@ -23,7 +23,7 @@
     </ul>
   </div>
   
-  <a @click.prevent="next">Suite</a>
+  <a  class="button" @click.prevent="next">Suite</a>
 </div>
 </template>
 

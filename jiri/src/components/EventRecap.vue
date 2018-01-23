@@ -54,7 +54,7 @@
       <div class="recap-validation-errors recap-error" v-if="this.validationErrors">
         Vous devez corriger les erreurs avant d'enregistrer l'épreuve
       </div>
-      <a @click.prevent="save">Enregistrer</a>
+      <a class="button" @click.prevent="save">Enregistrer</a>
       <span v-if="this.isBeingCreated">Épreuve en création</span>
   </div>
 </template>

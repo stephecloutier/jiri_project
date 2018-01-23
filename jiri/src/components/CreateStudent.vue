@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click.prevent="goBack">Précédent</a>
+        <a class="back" @click.prevent="goBack">Précédent</a>
         <h2>Création d'un nouvel étudiant</h2>
         <div>
             <label for="first_name">Prénom</label>
@@ -9,7 +9,7 @@
             <label for="last_name">Nom</label>
             <input type="text" id="last_name" @keyup.enter="createStudent" v-model="newStudent.last_name">
             <br>
-            <input type="submit" value="Ajouter l'étudiant" @click.prevent="createStudent">
+            <input class="button" type="submit" value="Ajouter l'étudiant" @click.prevent="createStudent">
         </div>
     </div>
 </template>

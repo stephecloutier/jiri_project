@@ -9,7 +9,7 @@
         {{ project.name }}
       </li>
     </ul>
-    <a @click.prevent="createProject">Créer un travail</a>
+    <a  class="button" @click.prevent="createProject">Créer un travail</a>
   </div>
 </template>
 

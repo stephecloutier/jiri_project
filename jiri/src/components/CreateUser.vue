@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click.prevent="goBack">Précédent</a>
+        <a class="back" @click.prevent="goBack">Précédent</a>
         <h2>Création d'un nouveau juré</h2>
         <div>
             <label for="first_name">Prénom</label>
@@ -18,7 +18,7 @@
             <label for="is_admin">Administrateur</label>
             <input type="checkbox" id="is_admin" v-model="newUser.is_admin">
             <br>
-            <input type="submit" value="Ajouter le juré" @click.prevent="createUser">
+            <input class="button" type="submit" value="Ajouter le juré" @click.prevent="createUser">
         </div>
     </div>
 </template>

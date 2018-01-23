@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click.prevent="navigate('meetings')">Retour</a>
+        <a class="back" @click.prevent="navigate('meetings')">Retour</a>
         <h2>Rencontre avec {{ this.getCurrentStudent.first_name }} {{ this.getCurrentStudent.last_name }}</h2>
         <span class="h2-like">Ses travaux</span>
         <div class="loading" v-if="loading">

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click.prevent="goBack">Précédent</a>
+        <a class="back" @click.prevent="goBack">Précédent</a>
         <h2>Création d'un nouveau travail</h2>
         <div>
             <label for="title">Nom du travail</label>
@@ -12,7 +12,7 @@
             <label for="weight">Pondération par défaut</label>
             <input type="number" id="weight" v-model="project.weight" min="0" max="1" step=".01" placeholder="0,3">
             <br>
-            <input type="submit" value="Ajouter le travail" @click.prevent="createProject">
+            <input class="button"  type="submit" value="Ajouter le travail" @click.prevent="createProject">
         </div>
     </div>
 </template>

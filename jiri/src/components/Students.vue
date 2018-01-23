@@ -12,7 +12,7 @@
         </div> -->
       </li>
     </ul>
-    <a @click.prevent="createStudent">Ajouter un étudiant</a>
+    <a class="button" @click.prevent="createStudent">Ajouter un étudiant</a>
   </div>
 </template>
 

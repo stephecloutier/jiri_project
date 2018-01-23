@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click.prevent="navigate('meetings/' + getCurrentMeeting.id)">Retour</a>
+        <a  class="back" @click.prevent="navigate('meetings/' + getCurrentMeeting.id)">Retour</a>
         <h2>Rencontre avec {{ this.getCurrentStudent.first_name + ' ' + this.getCurrentStudent.last_name }}</h2>
         <div class="project-infos">
             <span class="h2-like">{{ this.project.name }}</span>
@@ -16,7 +16,7 @@
             <label for="comment">Commentaire</label>
             <textarea id="comment" cols="30" rows="10" v-model="score.comment"></textarea>
             <br>
-            <input type="submit" value="Enregistrer" @click.prevent="saveScore">
+            <input class="button"  type="submit" value="Enregistrer" @click.prevent="saveScore">
         </div>
         <!-- <div class="loading" v-if="loading">
             Loading...

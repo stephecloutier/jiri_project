@@ -130,6 +130,33 @@ sup {
   color: #2C003D;
   letter-spacing: 1px;
   font-size: 1.25rem;
-  margin: 0;
+  margin: 0 0 1em 0;
+  display: inline-block;
 }
+
+.button {
+  padding: 1em 2em;
+  background-color: #C11843;
+  color: white;
+  display: inline-block;
+  border: none;
+  border-radius: 3em;
+  margin: 0.5em;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Dosis", Helvetica, arial, sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.5);
+}
+
+li {
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+  color: #2C003D;
+  font-weight: 500;
+  background-color: #FBFAFB;
+  cursor: pointer;
+}
+
 </style>

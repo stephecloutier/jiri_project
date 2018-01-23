@@ -8,12 +8,12 @@
                 <p v-for="error in this.loadingErrors" :key="error.index">
                     {{ error }}
                 </p>
-                <a @click.prevent="navigate('events/add')">Créer une épreuve</a>
+                <a class="button" @click.prevent="navigate('events/add')">Créer une épreuve</a>
             </div>
             <div v-else-if="!this.todayEvent">
                 <h2>Il n'y a pas d'épreuve prévue aujourd'hui.</h2>
                 <p class="h2-like">Créez une épreuve ou sélectionnez-en une dans la liste</p>
-                <a @click.prevent="navigate('events/add')">Créer une épreuve</a>
+                <a class="button button-dashboard"  @click.prevent="navigate('events/add')">Créer une épreuve</a>
                 <br>
                 <select id="event" v-model="selectedEventId">
                     <option v-for="event in this.getEvents" :key="event.id" :value="event.id">
